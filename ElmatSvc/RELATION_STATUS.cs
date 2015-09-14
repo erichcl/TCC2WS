@@ -14,7 +14,6 @@ namespace ElmatSvc
     
     public partial class RELATION_STATUS
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public RELATION_STATUS()
         {
             this.FRIENDS = new HashSet<FRIENDS>();
@@ -23,7 +22,6 @@ namespace ElmatSvc
         public long StatusID { get; set; }
         public string StatusDescription { get; set; }
     
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<FRIENDS> FRIENDS { get; set; }
     }
 }

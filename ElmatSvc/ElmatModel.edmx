@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="elmatModel.Store" Provider="MySql.Data.MySqlClient" ProviderManifestToken="5.5" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+      <Schema Namespace="elmatModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="FRIENDS">
           <Key>
             <PropertyRef Name="UserID_A" />
@@ -12,13 +12,13 @@
           </Key>
           <Property Name="UserID_A" Type="int" Nullable="false" />
           <Property Name="UserID_B" Type="int" Nullable="false" />
-          <Property Name="StatusID" Type="uint" Nullable="false" />
+          <Property Name="StatusID" Type="bigint" Nullable="false" />
         </EntityType>
         <EntityType Name="RELATION_STATUS">
           <Key>
             <PropertyRef Name="StatusID" />
           </Key>
-          <Property Name="StatusID" Type="uint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="StatusID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="StatusDescription" Type="varchar" MaxLength="250" Nullable="false" />
         </EntityType>
         <EntityType Name="RIDE">
@@ -28,7 +28,7 @@
           </Key>
           <Property Name="RideID" Type="int" Nullable="false" />
           <Property Name="UserID" Type="int" Nullable="false" />
-          <Property Name="Hour" Type="datetime" Precision="0" Nullable="false" />
+          <Property Name="Hour" Type="datetime2" Precision="0" Nullable="false" />
           <Property Name="LatOrg" Type="bigint" Nullable="false" />
           <Property Name="LonOrg" Type="bigint" Nullable="false" />
           <Property Name="LatDest" Type="bigint" Nullable="false" />
@@ -43,14 +43,14 @@
           <Property Name="RoutineID" Type="int" Nullable="false" />
           <Property Name="Title" Type="varchar" MaxLength="250" Nullable="false" />
           <Property Name="UserID" Type="int" Nullable="false" />
-          <Property Name="Mon" Type="bit" Nullable="false" />
-          <Property Name="Tue" Type="bit" Nullable="false" />
-          <Property Name="Wed" Type="bit" Nullable="false" />
-          <Property Name="Thu" Type="bit" Nullable="false" />
-          <Property Name="Fri" Type="bit" Nullable="false" />
-          <Property Name="Sat" Type="bit" Nullable="false" />
-          <Property Name="Sun" Type="bit" Nullable="false" />
-          <Property Name="Hour" Type="datetime" Precision="0" Nullable="false" />
+          <Property Name="Mon" Type="binary" MaxLength="1" Nullable="false" />
+          <Property Name="Tue" Type="binary" MaxLength="1" Nullable="false" />
+          <Property Name="Wed" Type="binary" MaxLength="1" Nullable="false" />
+          <Property Name="Thu" Type="binary" MaxLength="1" Nullable="false" />
+          <Property Name="Fri" Type="binary" MaxLength="1" Nullable="false" />
+          <Property Name="Sat" Type="binary" MaxLength="1" Nullable="false" />
+          <Property Name="Sun" Type="binary" MaxLength="1" Nullable="false" />
+          <Property Name="Hour" Type="datetime2" Precision="0" Nullable="false" />
           <Property Name="Lat" Type="bigint" Nullable="false" />
           <Property Name="Lon" Type="bigint" Nullable="false" />
         </EntityType>
@@ -61,7 +61,7 @@
           <Property Name="UserID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="FacebookID" Type="bigint" Nullable="false" />
         </EntityType>
-        <Association Name="FRIENDS_ibfk_1">
+        <Association Name="FRIENDS$FRIENDS_ibfk_1">
           <End Role="USER" Type="Self.USER" Multiplicity="1" />
           <End Role="FRIENDS" Type="Self.FRIENDS" Multiplicity="*" />
           <ReferentialConstraint>
@@ -73,7 +73,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FRIENDS_ibfk_2">
+        <Association Name="FRIENDS$FRIENDS_ibfk_2">
           <End Role="USER" Type="Self.USER" Multiplicity="1" />
           <End Role="FRIENDS" Type="Self.FRIENDS" Multiplicity="*" />
           <ReferentialConstraint>
@@ -85,31 +85,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="RIDE_ibfk_1">
-          <End Role="USER" Type="Self.USER" Multiplicity="1" />
-          <End Role="RIDE" Type="Self.RIDE" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="USER">
-              <PropertyRef Name="UserID" />
-            </Principal>
-            <Dependent Role="RIDE">
-              <PropertyRef Name="UserID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="ROUTINE_ibfk_1">
-          <End Role="USER" Type="Self.USER" Multiplicity="1" />
-          <End Role="ROUTINE" Type="Self.ROUTINE" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="USER">
-              <PropertyRef Name="UserID" />
-            </Principal>
-            <Dependent Role="ROUTINE">
-              <PropertyRef Name="UserID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="StatusID_RelationStatus">
+        <Association Name="FRIENDS$StatusID_RelationStatus">
           <End Role="RELATION_STATUS" Type="Self.RELATION_STATUS" Multiplicity="1" />
           <End Role="FRIENDS" Type="Self.FRIENDS" Multiplicity="*" />
           <ReferentialConstraint>
@@ -121,31 +97,55 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="RIDE$RIDE_ibfk_1">
+          <End Role="USER" Type="Self.USER" Multiplicity="1" />
+          <End Role="RIDE" Type="Self.RIDE" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="USER">
+              <PropertyRef Name="UserID" />
+            </Principal>
+            <Dependent Role="RIDE">
+              <PropertyRef Name="UserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="ROUTINE$ROUTINE_ibfk_1">
+          <End Role="USER" Type="Self.USER" Multiplicity="1" />
+          <End Role="ROUTINE" Type="Self.ROUTINE" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="USER">
+              <PropertyRef Name="UserID" />
+            </Principal>
+            <Dependent Role="ROUTINE">
+              <PropertyRef Name="UserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <EntityContainer Name="elmatModelStoreContainer">
-          <EntitySet Name="FRIENDS" EntityType="Self.FRIENDS" Schema="elmat" store:Type="Tables" />
-          <EntitySet Name="RELATION_STATUS" EntityType="Self.RELATION_STATUS" Schema="elmat" store:Type="Tables" />
-          <EntitySet Name="RIDE" EntityType="Self.RIDE" Schema="elmat" store:Type="Tables" />
-          <EntitySet Name="ROUTINE" EntityType="Self.ROUTINE" Schema="elmat" store:Type="Tables" />
-          <EntitySet Name="USER" EntityType="Self.USER" Schema="elmat" store:Type="Tables" />
-          <AssociationSet Name="FRIENDS_ibfk_1" Association="Self.FRIENDS_ibfk_1">
+          <EntitySet Name="FRIENDS" EntityType="Self.FRIENDS" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="RELATION_STATUS" EntityType="Self.RELATION_STATUS" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="RIDE" EntityType="Self.RIDE" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ROUTINE" EntityType="Self.ROUTINE" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="USER" EntityType="Self.USER" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FRIENDS$FRIENDS_ibfk_1" Association="Self.FRIENDS$FRIENDS_ibfk_1">
             <End Role="USER" EntitySet="USER" />
             <End Role="FRIENDS" EntitySet="FRIENDS" />
           </AssociationSet>
-          <AssociationSet Name="FRIENDS_ibfk_2" Association="Self.FRIENDS_ibfk_2">
+          <AssociationSet Name="FRIENDS$FRIENDS_ibfk_2" Association="Self.FRIENDS$FRIENDS_ibfk_2">
             <End Role="USER" EntitySet="USER" />
             <End Role="FRIENDS" EntitySet="FRIENDS" />
           </AssociationSet>
-          <AssociationSet Name="RIDE_ibfk_1" Association="Self.RIDE_ibfk_1">
+          <AssociationSet Name="FRIENDS$StatusID_RelationStatus" Association="Self.FRIENDS$StatusID_RelationStatus">
+            <End Role="RELATION_STATUS" EntitySet="RELATION_STATUS" />
+            <End Role="FRIENDS" EntitySet="FRIENDS" />
+          </AssociationSet>
+          <AssociationSet Name="RIDE$RIDE_ibfk_1" Association="Self.RIDE$RIDE_ibfk_1">
             <End Role="USER" EntitySet="USER" />
             <End Role="RIDE" EntitySet="RIDE" />
           </AssociationSet>
-          <AssociationSet Name="ROUTINE_ibfk_1" Association="Self.ROUTINE_ibfk_1">
+          <AssociationSet Name="ROUTINE$ROUTINE_ibfk_1" Association="Self.ROUTINE$ROUTINE_ibfk_1">
             <End Role="USER" EntitySet="USER" />
             <End Role="ROUTINE" EntitySet="ROUTINE" />
-          </AssociationSet>
-          <AssociationSet Name="StatusID_RelationStatus" Association="Self.StatusID_RelationStatus">
-            <End Role="RELATION_STATUS" EntitySet="RELATION_STATUS" />
-            <End Role="FRIENDS" EntitySet="FRIENDS" />
           </AssociationSet>
         </EntityContainer>
       </Schema>
@@ -161,9 +161,9 @@
           <Property Name="UserID_A" Type="Int32" Nullable="false" />
           <Property Name="UserID_B" Type="Int32" Nullable="false" />
           <Property Name="StatusID" Type="Int64" Nullable="false" />
-          <NavigationProperty Name="USER" Relationship="Self.FRIENDS_ibfk_1" FromRole="FRIENDS" ToRole="USER" />
-          <NavigationProperty Name="USER1" Relationship="Self.FRIENDS_ibfk_2" FromRole="FRIENDS" ToRole="USER" />
-          <NavigationProperty Name="RELATION_STATUS" Relationship="Self.StatusID_RelationStatus" FromRole="FRIENDS" ToRole="RELATION_STATUS" />
+          <NavigationProperty Name="USER" Relationship="Self.FRIENDS_FRIENDS_ibfk_1" FromRole="FRIENDS" ToRole="USER" />
+          <NavigationProperty Name="USER1" Relationship="Self.FRIENDS_FRIENDS_ibfk_2" FromRole="FRIENDS" ToRole="USER" />
+          <NavigationProperty Name="RELATION_STATUS" Relationship="Self.FRIENDS_StatusID_RelationStatus" FromRole="FRIENDS" ToRole="RELATION_STATUS" />
         </EntityType>
         <EntityType Name="RELATION_STATUS">
           <Key>
@@ -171,7 +171,7 @@
           </Key>
           <Property Name="StatusID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="StatusDescription" Type="String" MaxLength="250" FixedLength="false" Unicode="false" Nullable="false" />
-          <NavigationProperty Name="FRIENDS" Relationship="Self.StatusID_RelationStatus" FromRole="RELATION_STATUS" ToRole="FRIENDS" />
+          <NavigationProperty Name="FRIENDS" Relationship="Self.FRIENDS_StatusID_RelationStatus" FromRole="RELATION_STATUS" ToRole="FRIENDS" />
         </EntityType>
         <EntityType Name="RIDE">
           <Key>
@@ -180,12 +180,12 @@
           </Key>
           <Property Name="RideID" Type="Int32" Nullable="false" />
           <Property Name="UserID" Type="Int32" Nullable="false" />
-          <Property Name="Hour" Type="DateTime" Nullable="false" />
+          <Property Name="Hour" Type="DateTime" Nullable="false" Precision="0" />
           <Property Name="LatOrg" Type="Int64" Nullable="false" />
           <Property Name="LonOrg" Type="Int64" Nullable="false" />
           <Property Name="LatDest" Type="Int64" Nullable="false" />
           <Property Name="LonDest" Type="Int64" Nullable="false" />
-          <NavigationProperty Name="USER" Relationship="Self.RIDE_ibfk_1" FromRole="RIDE" ToRole="USER" />
+          <NavigationProperty Name="USER" Relationship="Self.RIDE_RIDE_ibfk_1" FromRole="RIDE" ToRole="USER" />
         </EntityType>
         <EntityType Name="ROUTINE">
           <Key>
@@ -196,17 +196,17 @@
           <Property Name="RoutineID" Type="Int32" Nullable="false" />
           <Property Name="Title" Type="String" MaxLength="250" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="UserID" Type="Int32" Nullable="false" />
-          <Property Name="Mon" Type="Boolean" Nullable="false" />
-          <Property Name="Tue" Type="Boolean" Nullable="false" />
-          <Property Name="Wed" Type="Boolean" Nullable="false" />
-          <Property Name="Thu" Type="Boolean" Nullable="false" />
-          <Property Name="Fri" Type="Boolean" Nullable="false" />
-          <Property Name="Sat" Type="Boolean" Nullable="false" />
-          <Property Name="Sun" Type="Boolean" Nullable="false" />
-          <Property Name="Hour" Type="DateTime" Nullable="false" />
+          <Property Name="Mon" Type="Binary" MaxLength="1" FixedLength="true" Nullable="false" />
+          <Property Name="Tue" Type="Binary" MaxLength="1" FixedLength="true" Nullable="false" />
+          <Property Name="Wed" Type="Binary" MaxLength="1" FixedLength="true" Nullable="false" />
+          <Property Name="Thu" Type="Binary" MaxLength="1" FixedLength="true" Nullable="false" />
+          <Property Name="Fri" Type="Binary" MaxLength="1" FixedLength="true" Nullable="false" />
+          <Property Name="Sat" Type="Binary" MaxLength="1" FixedLength="true" Nullable="false" />
+          <Property Name="Sun" Type="Binary" MaxLength="1" FixedLength="true" Nullable="false" />
+          <Property Name="Hour" Type="DateTime" Nullable="false" Precision="0" />
           <Property Name="Lat" Type="Int64" Nullable="false" />
           <Property Name="Lon" Type="Int64" Nullable="false" />
-          <NavigationProperty Name="USER" Relationship="Self.ROUTINE_ibfk_1" FromRole="ROUTINE" ToRole="USER" />
+          <NavigationProperty Name="USER" Relationship="Self.ROUTINE_ROUTINE_ibfk_1" FromRole="ROUTINE" ToRole="USER" />
         </EntityType>
         <EntityType Name="USER">
           <Key>
@@ -214,12 +214,12 @@
           </Key>
           <Property Name="UserID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="FacebookID" Type="Int64" Nullable="false" />
-          <NavigationProperty Name="FRIENDS" Relationship="Self.FRIENDS_ibfk_1" FromRole="USER" ToRole="FRIENDS" />
-          <NavigationProperty Name="FRIENDS1" Relationship="Self.FRIENDS_ibfk_2" FromRole="USER" ToRole="FRIENDS" />
-          <NavigationProperty Name="RIDE" Relationship="Self.RIDE_ibfk_1" FromRole="USER" ToRole="RIDE" />
-          <NavigationProperty Name="ROUTINE" Relationship="Self.ROUTINE_ibfk_1" FromRole="USER" ToRole="ROUTINE" />
+          <NavigationProperty Name="FRIENDS" Relationship="Self.FRIENDS_FRIENDS_ibfk_1" FromRole="USER" ToRole="FRIENDS" />
+          <NavigationProperty Name="FRIENDS1" Relationship="Self.FRIENDS_FRIENDS_ibfk_2" FromRole="USER" ToRole="FRIENDS" />
+          <NavigationProperty Name="RIDE" Relationship="Self.RIDE_RIDE_ibfk_1" FromRole="USER" ToRole="RIDE" />
+          <NavigationProperty Name="ROUTINE" Relationship="Self.ROUTINE_ROUTINE_ibfk_1" FromRole="USER" ToRole="ROUTINE" />
         </EntityType>
-        <Association Name="FRIENDS_ibfk_1">
+        <Association Name="FRIENDS_FRIENDS_ibfk_1">
           <End Role="USER" Type="Self.USER" Multiplicity="1" />
           <End Role="FRIENDS" Type="Self.FRIENDS" Multiplicity="*" />
           <ReferentialConstraint>
@@ -231,7 +231,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FRIENDS_ibfk_2">
+        <Association Name="FRIENDS_FRIENDS_ibfk_2">
           <End Role="USER" Type="Self.USER" Multiplicity="1" />
           <End Role="FRIENDS" Type="Self.FRIENDS" Multiplicity="*" />
           <ReferentialConstraint>
@@ -243,7 +243,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="StatusID_RelationStatus">
+        <Association Name="FRIENDS_StatusID_RelationStatus">
           <End Role="RELATION_STATUS" Type="Self.RELATION_STATUS" Multiplicity="1" />
           <End Role="FRIENDS" Type="Self.FRIENDS" Multiplicity="*" />
           <ReferentialConstraint>
@@ -255,7 +255,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="RIDE_ibfk_1">
+        <Association Name="RIDE_RIDE_ibfk_1">
           <End Role="USER" Type="Self.USER" Multiplicity="1" />
           <End Role="RIDE" Type="Self.RIDE" Multiplicity="*" />
           <ReferentialConstraint>
@@ -267,7 +267,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="ROUTINE_ibfk_1">
+        <Association Name="ROUTINE_ROUTINE_ibfk_1">
           <End Role="USER" Type="Self.USER" Multiplicity="1" />
           <End Role="ROUTINE" Type="Self.ROUTINE" Multiplicity="*" />
           <ReferentialConstraint>
@@ -285,23 +285,23 @@
           <EntitySet Name="RIDE" EntityType="Self.RIDE" />
           <EntitySet Name="ROUTINE" EntityType="Self.ROUTINE" />
           <EntitySet Name="USER" EntityType="Self.USER" />
-          <AssociationSet Name="FRIENDS_ibfk_1" Association="Self.FRIENDS_ibfk_1">
+          <AssociationSet Name="FRIENDS_FRIENDS_ibfk_1" Association="Self.FRIENDS_FRIENDS_ibfk_1">
             <End Role="USER" EntitySet="USER" />
             <End Role="FRIENDS" EntitySet="FRIENDS" />
           </AssociationSet>
-          <AssociationSet Name="FRIENDS_ibfk_2" Association="Self.FRIENDS_ibfk_2">
+          <AssociationSet Name="FRIENDS_FRIENDS_ibfk_2" Association="Self.FRIENDS_FRIENDS_ibfk_2">
             <End Role="USER" EntitySet="USER" />
             <End Role="FRIENDS" EntitySet="FRIENDS" />
           </AssociationSet>
-          <AssociationSet Name="StatusID_RelationStatus" Association="Self.StatusID_RelationStatus">
+          <AssociationSet Name="FRIENDS_StatusID_RelationStatus" Association="Self.FRIENDS_StatusID_RelationStatus">
             <End Role="RELATION_STATUS" EntitySet="RELATION_STATUS" />
             <End Role="FRIENDS" EntitySet="FRIENDS" />
           </AssociationSet>
-          <AssociationSet Name="RIDE_ibfk_1" Association="Self.RIDE_ibfk_1">
+          <AssociationSet Name="RIDE_RIDE_ibfk_1" Association="Self.RIDE_RIDE_ibfk_1">
             <End Role="USER" EntitySet="USER" />
             <End Role="RIDE" EntitySet="RIDE" />
           </AssociationSet>
-          <AssociationSet Name="ROUTINE_ibfk_1" Association="Self.ROUTINE_ibfk_1">
+          <AssociationSet Name="ROUTINE_ROUTINE_ibfk_1" Association="Self.ROUTINE_ROUTINE_ibfk_1">
             <End Role="USER" EntitySet="USER" />
             <End Role="ROUTINE" EntitySet="ROUTINE" />
           </AssociationSet>

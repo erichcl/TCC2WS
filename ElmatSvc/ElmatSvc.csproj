@@ -48,15 +48,6 @@
     <Reference Include="Microsoft.CSharp">
       <Private>True</Private>
     </Reference>
-    <Reference Include="MySql.Data, Version=6.9.7.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\MySql.Data.6.9.7\lib\net45\MySql.Data.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="MySql.Data.Entity.EF6, Version=6.9.7.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\MySql.Data.Entity.6.9.7\lib\net45\MySql.Data.Entity.EF6.dll</HintPath>
-    </Reference>
     <Reference Include="System.Runtime.Serialization">
       <Private>True</Private>
     </Reference>
@@ -117,24 +108,25 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
-    <EntityDeploy Include="ElmatModel.edmx">
+    <EntityDeploy Include="elmatModel.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>ElmatModel.Designer.cs</LastGenOutput>
+      <LastGenOutput>elmatModel.Designer.cs</LastGenOutput>
     </EntityDeploy>
-    <Content Include="ElmatModel.Context.tt">
+    <Content Include="elmatModel.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>ElmatModel.edmx</DependentUpon>
-      <LastGenOutput>ElmatModel.Context.cs</LastGenOutput>
+      <DependentUpon>elmatModel.edmx</DependentUpon>
+      <LastGenOutput>elmatModel.Context.cs</LastGenOutput>
     </Content>
-    <Content Include="ElmatModel.edmx.diagram">
-      <DependentUpon>ElmatModel.edmx</DependentUpon>
+    <Content Include="elmatModel.edmx.diagram">
+      <DependentUpon>elmatModel.edmx</DependentUpon>
     </Content>
-    <Content Include="ElmatModel.tt">
+    <Content Include="elmatModel.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>ElmatModel.edmx</DependentUpon>
-      <LastGenOutput>ElmatModel.cs</LastGenOutput>
+      <DependentUpon>elmatModel.edmx</DependentUpon>
+      <LastGenOutput>elmatModel.cs</LastGenOutput>
     </Content>
     <None Include="Properties\PublishProfiles\PublishElmat.pubxml" />
+    <None Include="Properties\PublishProfiles\PublishNote.pubxml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -150,41 +142,41 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Business\UserBLL.cs" />
-    <Compile Include="ElmatModel.Context.cs">
+    <Compile Include="elmatModel.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>ElmatModel.Context.tt</DependentUpon>
+      <DependentUpon>elmatModel.Context.tt</DependentUpon>
     </Compile>
-    <Compile Include="ElmatModel.cs">
+    <Compile Include="elmatModel.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>ElmatModel.tt</DependentUpon>
+      <DependentUpon>elmatModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="ElmatModel.Designer.cs">
+    <Compile Include="elmatModel.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>ElmatModel.edmx</DependentUpon>
+      <DependentUpon>elmatModel.edmx</DependentUpon>
     </Compile>
     <Compile Include="FRIENDS.cs">
-      <DependentUpon>ElmatModel.tt</DependentUpon>
+      <DependentUpon>elmatModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Messages\User.cs" />
-    <Compile Include="SvcInterfaces\IUserService.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RELATION_STATUS.cs">
-      <DependentUpon>ElmatModel.tt</DependentUpon>
+      <DependentUpon>elmatModel.tt</DependentUpon>
     </Compile>
     <Compile Include="RIDE.cs">
-      <DependentUpon>ElmatModel.tt</DependentUpon>
+      <DependentUpon>elmatModel.tt</DependentUpon>
     </Compile>
     <Compile Include="ROUTINE.cs">
-      <DependentUpon>ElmatModel.tt</DependentUpon>
+      <DependentUpon>elmatModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="USER.cs">
-      <DependentUpon>ElmatModel.tt</DependentUpon>
-    </Compile>
+    <Compile Include="SvcInterfaces\IUserService.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\UserService.svc.cs">
       <DependentUpon>UserService.svc</DependentUpon>
+    </Compile>
+    <Compile Include="USER.cs">
+      <DependentUpon>elmatModel.tt</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>

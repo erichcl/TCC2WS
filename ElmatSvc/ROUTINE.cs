@@ -17,13 +17,13 @@ namespace ElmatSvc
         public int RoutineID { get; set; }
         public string Title { get; set; }
         public int UserID { get; set; }
-        public bool Mon { get; set; }
-        public bool Tue { get; set; }
-        public bool Wed { get; set; }
-        public bool Thu { get; set; }
-        public bool Fri { get; set; }
-        public bool Sat { get; set; }
-        public bool Sun { get; set; }
+        public byte[] Mon { get; set; }
+        public byte[] Tue { get; set; }
+        public byte[] Wed { get; set; }
+        public byte[] Thu { get; set; }
+        public byte[] Fri { get; set; }
+        public byte[] Sat { get; set; }
+        public byte[] Sun { get; set; }
         public System.DateTime Hour { get; set; }
         public long Lat { get; set; }
         public long Lon { get; set; }
