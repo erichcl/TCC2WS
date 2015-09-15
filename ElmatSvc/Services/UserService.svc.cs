@@ -41,5 +41,17 @@ namespace ElmatSvc
                 }
             }
         }
+
+        public User GetUser(UserFilter filter)
+        {
+            User usr = UserBLL.getUser(filter);
+            return usr;
+        }
+
+        public int FindFriends(User usr)
+        {
+            FacebookBLL.FBrqst();
+            return 0;
+        }
     }
 }

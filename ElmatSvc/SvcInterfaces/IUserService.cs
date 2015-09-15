@@ -4,6 +4,7 @@ using System.Linq;
 using System.Runtime.Serialization;
 using System.ServiceModel;
 using System.Text;
+using ElmatSvc.Messages;
 
 namespace ElmatSvc
 {
@@ -15,5 +16,9 @@ namespace ElmatSvc
         string getMessage(string message);
         [OperationContract]
         int RegisterUser(Int64 FacebookID);
+        [OperationContract]
+        User GetUser(UserFilter filter);
+        [OperationContract]
+        int FindFriends(User usr);
     }
 }
