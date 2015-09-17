@@ -19,27 +19,30 @@ namespace ElmatSvc
             return message;
         }
 
-        public int RegisterUser(Int64 FacebookID)
-        { 
-            UserFilter filter = new UserFilter();
-            filter.FbID = FacebookID;
-            User usr = UserBLL.getUser(filter);
-            if (usr != null) //usuario existe, retorna o ID do vivente
+        public int RegisterUser(string accessToken)
+        {
+            accessToken = "CAAUqAZAMbo7kBALaLpkyJFvFiXp4ZB0WrPASeZAeEwwY0o3GWZA5i3plvEvbEawStg5qioZCLQmol36gYV8m1FBrC8P30kDO6sc8aP4a0FTkm6yxtpzF1d1ufvOa8w0b3qeIl99AE5SuqWtIHPXZCmQozUTu6JK3VAUjNDoTo3tLSqbFcAwY4LILnNkzZAaZCk1WHRR0Gg2wSwZDZD";
+            try
             {
-                return usr.UserID;
-            }
-            else // se não, cadastra e devolve o novo ID
-            {
-                try
+                Int64 FacebookID = FacebookBLL.FBGetID(accessToken);
+                UserFilter filter = new UserFilter();
+                filter.FbID = FacebookID;
+                User usr = UserBLL.getUser(filter);
+                if (usr != null) //usuario existe, retorna o ID do vivente
+                {
+                    return usr.UserID;
+                }
+                else // se não, cadastra e devolve o novo ID
                 {
                     usr = UserBLL.RegisterUser(FacebookID);
                     return usr.UserID;
                 }
-                catch (Exception e)
-                {
-                    throw e;
-                }
             }
+            catch (Exception e)
+            {
+                throw e;
+            }
+            
         }
 
         public User GetUser(UserFilter filter)
@@ -48,9 +51,10 @@ namespace ElmatSvc
             return usr;
         }
 
-        public int FindFriends(User usr)
+        public int FindFriends(User usr, string accessToken)
         {
-            FacebookBLL.FBrqst();
+            accessToken = "CAAUqAZAMbo7kBALaLpkyJFvFiXp4ZB0WrPASeZAeEwwY0o3GWZA5i3plvEvbEawStg5qioZCLQmol36gYV8m1FBrC8P30kDO6sc8aP4a0FTkm6yxtpzF1d1ufvOa8w0b3qeIl99AE5SuqWtIHPXZCmQozUTu6JK3VAUjNDoTo3tLSqbFcAwY4LILnNkzZAaZCk1WHRR0Gg2wSwZDZD";
+            FacebookBLL.FBGetFriends(accessToken);
             return 0;
         }
     }
