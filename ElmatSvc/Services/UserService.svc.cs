@@ -35,6 +35,10 @@ namespace ElmatSvc
                 else // se não, cadastra e devolve o novo ID
                 {
                     usr = UserBLL.RegisterUser(FacebookID);
+                    List<Int64> FriendsID = FacebookBLL.FBGetFriends(accessToken);
+                    int mkFriends = UserBLL.MakeFriends(FriendsID, usr);
+                    // Do something if mkFriends is false
+
                     return usr.UserID;
                 }
             }
@@ -51,11 +55,28 @@ namespace ElmatSvc
             return usr;
         }
 
-        public int FindFriends(User usr, string accessToken)
+        public string UpdtFriends(User usr, string accessToken)
         {
             accessToken = "CAAUqAZAMbo7kBALaLpkyJFvFiXp4ZB0WrPASeZAeEwwY0o3GWZA5i3plvEvbEawStg5qioZCLQmol36gYV8m1FBrC8P30kDO6sc8aP4a0FTkm6yxtpzF1d1ufvOa8w0b3qeIl99AE5SuqWtIHPXZCmQozUTu6JK3VAUjNDoTo3tLSqbFcAwY4LILnNkzZAaZCk1WHRR0Gg2wSwZDZD";
-            FacebookBLL.FBGetFriends(accessToken);
-            return 0;
+            string ret = "";
+            List<Int64> FriendsID = FacebookBLL.FBGetFriends(accessToken);
+            int mkFriends = UserBLL.MakeFriends(FriendsID, usr);
+            if (mkFriends > -1)
+            {
+                ret = mkFriends.ToString() + " amigos do Facebook sincronizados com sucesso";
+            }
+            else
+            {
+                ret = "Ocorreu um problema ao sincronizar os amigos do Facebook";
+            }
+            return ret;
         }
+
+        //public int FindFriends(User usr, string accessToken)
+        //{
+        //    accessToken = "CAAUqAZAMbo7kBALaLpkyJFvFiXp4ZB0WrPASeZAeEwwY0o3GWZA5i3plvEvbEawStg5qioZCLQmol36gYV8m1FBrC8P30kDO6sc8aP4a0FTkm6yxtpzF1d1ufvOa8w0b3qeIl99AE5SuqWtIHPXZCmQozUTu6JK3VAUjNDoTo3tLSqbFcAwY4LILnNkzZAaZCk1WHRR0Gg2wSwZDZD";
+        //    FacebookBLL.FBGetFriends(accessToken);
+        //    return 0;
+        //}
     }
 }

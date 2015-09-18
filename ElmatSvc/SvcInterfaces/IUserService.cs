@@ -15,10 +15,13 @@ namespace ElmatSvc
         [OperationContract]
         string getMessage(string message);
         [OperationContract]
-        int RegisterUser(Int64 FacebookID);
+        int RegisterUser(string accessToken);
         [OperationContract]
         User GetUser(UserFilter filter);
+        //[OperationContract]
+        //int FindFriends(User usr, string accessToken);
         [OperationContract]
-        int FindFriends(User usr);
+        string UpdtFriends(User usr, string accessToken);
+
     }
 }
