@@ -17,10 +17,10 @@ namespace ElmatSvc
         public int RideID { get; set; }
         public int UserID { get; set; }
         public System.DateTime Hour { get; set; }
-        public long LatOrg { get; set; }
-        public long LonOrg { get; set; }
-        public long LatDest { get; set; }
-        public long LonDest { get; set; }
+        public double LatOrg { get; set; }
+        public double LonOrg { get; set; }
+        public double LatDest { get; set; }
+        public double LonDest { get; set; }
     
         public virtual USER USER { get; set; }
     }

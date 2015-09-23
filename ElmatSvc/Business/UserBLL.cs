@@ -146,5 +146,21 @@ namespace ElmatSvc.Business
                 }
             }
         }
+
+        public static List<User> getUserFriends (User usr)
+        {
+            using (elmatEntities entities = new elmatEntities())
+            {
+                var AlreadyFriends = (from F in entities.FRIENDS.Where(x => x.UserID_A == usr.UserID || x.UserID_B == usr.UserID)
+                                      join UA in entities.USER on F.UserID_A equals UA.UserID
+                                      join UB in entities.USER on F.UserID_B equals UB.UserID
+                                      select new User {
+                                          FacebookID = F.UserID_A == usr.UserID ? UB.FacebookID : UA.FacebookID,
+                                          UserID = F.UserID_A == usr.UserID ? UB.UserID : UA.UserID
+                                      }).ToList();
+                return AlreadyFriends;
+            }
+        }
+        
     }
 }

@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="elmatModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="elmatModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="FRIENDS">
           <Key>
             <PropertyRef Name="UserID_A" />
@@ -29,10 +29,10 @@
           <Property Name="RideID" Type="int" Nullable="false" />
           <Property Name="UserID" Type="int" Nullable="false" />
           <Property Name="Hour" Type="datetime2" Precision="0" Nullable="false" />
-          <Property Name="LatOrg" Type="bigint" Nullable="false" />
-          <Property Name="LonOrg" Type="bigint" Nullable="false" />
-          <Property Name="LatDest" Type="bigint" Nullable="false" />
-          <Property Name="LonDest" Type="bigint" Nullable="false" />
+          <Property Name="LatOrg" Type="float" Nullable="false" />
+          <Property Name="LonOrg" Type="float" Nullable="false" />
+          <Property Name="LatDest" Type="float" Nullable="false" />
+          <Property Name="LonDest" Type="float" Nullable="false" />
         </EntityType>
         <EntityType Name="ROUTINE">
           <Key>
@@ -51,8 +51,8 @@
           <Property Name="Sat" Type="binary" MaxLength="1" Nullable="false" />
           <Property Name="Sun" Type="binary" MaxLength="1" Nullable="false" />
           <Property Name="Hour" Type="datetime2" Precision="0" Nullable="false" />
-          <Property Name="Lat" Type="bigint" Nullable="false" />
-          <Property Name="Lon" Type="bigint" Nullable="false" />
+          <Property Name="Lat" Type="float" Nullable="false" />
+          <Property Name="Lon" Type="float" Nullable="false" />
         </EntityType>
         <EntityType Name="USER">
           <Key>
@@ -148,8 +148,7 @@
             <End Role="ROUTINE" EntitySet="ROUTINE" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="elmatModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -173,41 +172,6 @@
           <Property Name="StatusDescription" Type="String" MaxLength="250" FixedLength="false" Unicode="false" Nullable="false" />
           <NavigationProperty Name="FRIENDS" Relationship="Self.FRIENDS_StatusID_RelationStatus" FromRole="RELATION_STATUS" ToRole="FRIENDS" />
         </EntityType>
-        <EntityType Name="RIDE">
-          <Key>
-            <PropertyRef Name="RideID" />
-            <PropertyRef Name="UserID" />
-          </Key>
-          <Property Name="RideID" Type="Int32" Nullable="false" />
-          <Property Name="UserID" Type="Int32" Nullable="false" />
-          <Property Name="Hour" Type="DateTime" Nullable="false" Precision="0" />
-          <Property Name="LatOrg" Type="Int64" Nullable="false" />
-          <Property Name="LonOrg" Type="Int64" Nullable="false" />
-          <Property Name="LatDest" Type="Int64" Nullable="false" />
-          <Property Name="LonDest" Type="Int64" Nullable="false" />
-          <NavigationProperty Name="USER" Relationship="Self.RIDE_RIDE_ibfk_1" FromRole="RIDE" ToRole="USER" />
-        </EntityType>
-        <EntityType Name="ROUTINE">
-          <Key>
-            <PropertyRef Name="RoutineID" />
-            <PropertyRef Name="Title" />
-            <PropertyRef Name="UserID" />
-          </Key>
-          <Property Name="RoutineID" Type="Int32" Nullable="false" />
-          <Property Name="Title" Type="String" MaxLength="250" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="UserID" Type="Int32" Nullable="false" />
-          <Property Name="Mon" Type="Binary" MaxLength="1" FixedLength="true" Nullable="false" />
-          <Property Name="Tue" Type="Binary" MaxLength="1" FixedLength="true" Nullable="false" />
-          <Property Name="Wed" Type="Binary" MaxLength="1" FixedLength="true" Nullable="false" />
-          <Property Name="Thu" Type="Binary" MaxLength="1" FixedLength="true" Nullable="false" />
-          <Property Name="Fri" Type="Binary" MaxLength="1" FixedLength="true" Nullable="false" />
-          <Property Name="Sat" Type="Binary" MaxLength="1" FixedLength="true" Nullable="false" />
-          <Property Name="Sun" Type="Binary" MaxLength="1" FixedLength="true" Nullable="false" />
-          <Property Name="Hour" Type="DateTime" Nullable="false" Precision="0" />
-          <Property Name="Lat" Type="Int64" Nullable="false" />
-          <Property Name="Lon" Type="Int64" Nullable="false" />
-          <NavigationProperty Name="USER" Relationship="Self.ROUTINE_ROUTINE_ibfk_1" FromRole="ROUTINE" ToRole="USER" />
-        </EntityType>
         <EntityType Name="USER">
           <Key>
             <PropertyRef Name="UserID" />
@@ -216,8 +180,8 @@
           <Property Name="FacebookID" Type="Int64" Nullable="false" />
           <NavigationProperty Name="FRIENDS" Relationship="Self.FRIENDS_FRIENDS_ibfk_1" FromRole="USER" ToRole="FRIENDS" />
           <NavigationProperty Name="FRIENDS1" Relationship="Self.FRIENDS_FRIENDS_ibfk_2" FromRole="USER" ToRole="FRIENDS" />
-          <NavigationProperty Name="RIDE" Relationship="Self.RIDE_RIDE_ibfk_1" FromRole="USER" ToRole="RIDE" />
-          <NavigationProperty Name="ROUTINE" Relationship="Self.ROUTINE_ROUTINE_ibfk_1" FromRole="USER" ToRole="ROUTINE" />
+          <NavigationProperty Name="RIDE" Relationship="elmatModel.RIDE_RIDE_ibfk_1" FromRole="USER" ToRole="RIDE" />
+          <NavigationProperty Name="ROUTINE" Relationship="elmatModel.ROUTINE_ROUTINE_ibfk_1" FromRole="USER" ToRole="ROUTINE" />
         </EntityType>
         <Association Name="FRIENDS_FRIENDS_ibfk_1">
           <End Role="USER" Type="Self.USER" Multiplicity="1" />
@@ -255,35 +219,9 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="RIDE_RIDE_ibfk_1">
-          <End Role="USER" Type="Self.USER" Multiplicity="1" />
-          <End Role="RIDE" Type="Self.RIDE" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="USER">
-              <PropertyRef Name="UserID" />
-            </Principal>
-            <Dependent Role="RIDE">
-              <PropertyRef Name="UserID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="ROUTINE_ROUTINE_ibfk_1">
-          <End Role="USER" Type="Self.USER" Multiplicity="1" />
-          <End Role="ROUTINE" Type="Self.ROUTINE" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="USER">
-              <PropertyRef Name="UserID" />
-            </Principal>
-            <Dependent Role="ROUTINE">
-              <PropertyRef Name="UserID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <EntityContainer Name="elmatEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="FRIENDS" EntityType="Self.FRIENDS" />
           <EntitySet Name="RELATION_STATUS" EntityType="Self.RELATION_STATUS" />
-          <EntitySet Name="RIDE" EntityType="Self.RIDE" />
-          <EntitySet Name="ROUTINE" EntityType="Self.ROUTINE" />
           <EntitySet Name="USER" EntityType="Self.USER" />
           <AssociationSet Name="FRIENDS_FRIENDS_ibfk_1" Association="Self.FRIENDS_FRIENDS_ibfk_1">
             <End Role="USER" EntitySet="USER" />
@@ -297,15 +235,76 @@
             <End Role="RELATION_STATUS" EntitySet="RELATION_STATUS" />
             <End Role="FRIENDS" EntitySet="FRIENDS" />
           </AssociationSet>
-          <AssociationSet Name="RIDE_RIDE_ibfk_1" Association="Self.RIDE_RIDE_ibfk_1">
+          <EntitySet Name="RIDE" EntityType="elmatModel.RIDE" />
+          <EntitySet Name="ROUTINE" EntityType="elmatModel.ROUTINE" />
+          <AssociationSet Name="RIDE_RIDE_ibfk_1" Association="elmatModel.RIDE_RIDE_ibfk_1">
             <End Role="USER" EntitySet="USER" />
             <End Role="RIDE" EntitySet="RIDE" />
           </AssociationSet>
-          <AssociationSet Name="ROUTINE_ROUTINE_ibfk_1" Association="Self.ROUTINE_ROUTINE_ibfk_1">
+          <AssociationSet Name="ROUTINE_ROUTINE_ibfk_1" Association="elmatModel.ROUTINE_ROUTINE_ibfk_1">
             <End Role="USER" EntitySet="USER" />
             <End Role="ROUTINE" EntitySet="ROUTINE" />
           </AssociationSet>
         </EntityContainer>
+        <EntityType Name="RIDE">
+          <Key>
+            <PropertyRef Name="RideID" />
+            <PropertyRef Name="UserID" />
+          </Key>
+          <Property Name="RideID" Type="Int32" Nullable="false" />
+          <Property Name="UserID" Type="Int32" Nullable="false" />
+          <Property Name="Hour" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="LatOrg" Type="Double" Nullable="false" />
+          <Property Name="LonOrg" Type="Double" Nullable="false" />
+          <Property Name="LatDest" Type="Double" Nullable="false" />
+          <Property Name="LonDest" Type="Double" Nullable="false" />
+          <NavigationProperty Name="USER" Relationship="elmatModel.RIDE_RIDE_ibfk_1" FromRole="RIDE" ToRole="USER" />
+        </EntityType>
+        <EntityType Name="ROUTINE">
+          <Key>
+            <PropertyRef Name="RoutineID" />
+            <PropertyRef Name="Title" />
+            <PropertyRef Name="UserID" />
+          </Key>
+          <Property Name="RoutineID" Type="Int32" Nullable="false" />
+          <Property Name="Title" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="UserID" Type="Int32" Nullable="false" />
+          <Property Name="Mon" Type="Binary" Nullable="false" MaxLength="1" FixedLength="true" />
+          <Property Name="Tue" Type="Binary" Nullable="false" MaxLength="1" FixedLength="true" />
+          <Property Name="Wed" Type="Binary" Nullable="false" MaxLength="1" FixedLength="true" />
+          <Property Name="Thu" Type="Binary" Nullable="false" MaxLength="1" FixedLength="true" />
+          <Property Name="Fri" Type="Binary" Nullable="false" MaxLength="1" FixedLength="true" />
+          <Property Name="Sat" Type="Binary" Nullable="false" MaxLength="1" FixedLength="true" />
+          <Property Name="Sun" Type="Binary" Nullable="false" MaxLength="1" FixedLength="true" />
+          <Property Name="Hour" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="Lat" Type="Double" Nullable="false" />
+          <Property Name="Lon" Type="Double" Nullable="false" />
+          <NavigationProperty Name="USER" Relationship="elmatModel.ROUTINE_ROUTINE_ibfk_1" FromRole="ROUTINE" ToRole="USER" />
+        </EntityType>
+        <Association Name="RIDE_RIDE_ibfk_1">
+          <End Type="elmatModel.USER" Role="USER" Multiplicity="1" />
+          <End Type="elmatModel.RIDE" Role="RIDE" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="USER">
+              <PropertyRef Name="UserID" />
+            </Principal>
+            <Dependent Role="RIDE">
+              <PropertyRef Name="UserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="ROUTINE_ROUTINE_ibfk_1">
+          <End Type="elmatModel.USER" Role="USER" Multiplicity="1" />
+          <End Type="elmatModel.ROUTINE" Role="ROUTINE" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="USER">
+              <PropertyRef Name="UserID" />
+            </Principal>
+            <Dependent Role="ROUTINE">
+              <PropertyRef Name="UserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -329,43 +328,43 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="USER">
+            <EntityTypeMapping TypeName="elmatModel.USER">
+              <MappingFragment StoreEntitySet="USER">
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
+                <ScalarProperty Name="FacebookID" ColumnName="FacebookID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="RIDE">
             <EntityTypeMapping TypeName="elmatModel.RIDE">
               <MappingFragment StoreEntitySet="RIDE">
-                <ScalarProperty Name="RideID" ColumnName="RideID" />
-                <ScalarProperty Name="UserID" ColumnName="UserID" />
-                <ScalarProperty Name="Hour" ColumnName="Hour" />
-                <ScalarProperty Name="LatOrg" ColumnName="LatOrg" />
-                <ScalarProperty Name="LonOrg" ColumnName="LonOrg" />
-                <ScalarProperty Name="LatDest" ColumnName="LatDest" />
                 <ScalarProperty Name="LonDest" ColumnName="LonDest" />
+                <ScalarProperty Name="LatDest" ColumnName="LatDest" />
+                <ScalarProperty Name="LonOrg" ColumnName="LonOrg" />
+                <ScalarProperty Name="LatOrg" ColumnName="LatOrg" />
+                <ScalarProperty Name="Hour" ColumnName="Hour" />
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
+                <ScalarProperty Name="RideID" ColumnName="RideID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="ROUTINE">
             <EntityTypeMapping TypeName="elmatModel.ROUTINE">
               <MappingFragment StoreEntitySet="ROUTINE">
-                <ScalarProperty Name="RoutineID" ColumnName="RoutineID" />
-                <ScalarProperty Name="Title" ColumnName="Title" />
-                <ScalarProperty Name="UserID" ColumnName="UserID" />
-                <ScalarProperty Name="Mon" ColumnName="Mon" />
-                <ScalarProperty Name="Tue" ColumnName="Tue" />
-                <ScalarProperty Name="Wed" ColumnName="Wed" />
-                <ScalarProperty Name="Thu" ColumnName="Thu" />
-                <ScalarProperty Name="Fri" ColumnName="Fri" />
-                <ScalarProperty Name="Sat" ColumnName="Sat" />
-                <ScalarProperty Name="Sun" ColumnName="Sun" />
-                <ScalarProperty Name="Hour" ColumnName="Hour" />
-                <ScalarProperty Name="Lat" ColumnName="Lat" />
                 <ScalarProperty Name="Lon" ColumnName="Lon" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="USER">
-            <EntityTypeMapping TypeName="elmatModel.USER">
-              <MappingFragment StoreEntitySet="USER">
+                <ScalarProperty Name="Lat" ColumnName="Lat" />
+                <ScalarProperty Name="Hour" ColumnName="Hour" />
+                <ScalarProperty Name="Sun" ColumnName="Sun" />
+                <ScalarProperty Name="Sat" ColumnName="Sat" />
+                <ScalarProperty Name="Fri" ColumnName="Fri" />
+                <ScalarProperty Name="Thu" ColumnName="Thu" />
+                <ScalarProperty Name="Wed" ColumnName="Wed" />
+                <ScalarProperty Name="Tue" ColumnName="Tue" />
+                <ScalarProperty Name="Mon" ColumnName="Mon" />
                 <ScalarProperty Name="UserID" ColumnName="UserID" />
-                <ScalarProperty Name="FacebookID" ColumnName="FacebookID" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="RoutineID" ColumnName="RoutineID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

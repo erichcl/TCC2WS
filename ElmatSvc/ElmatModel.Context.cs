@@ -27,8 +27,8 @@ namespace ElmatSvc
     
         public virtual DbSet<FRIENDS> FRIENDS { get; set; }
         public virtual DbSet<RELATION_STATUS> RELATION_STATUS { get; set; }
+        public virtual DbSet<USER> USER { get; set; }
         public virtual DbSet<RIDE> RIDE { get; set; }
         public virtual DbSet<ROUTINE> ROUTINE { get; set; }
-        public virtual DbSet<USER> USER { get; set; }
     }
 }

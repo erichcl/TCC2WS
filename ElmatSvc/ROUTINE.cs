@@ -25,8 +25,8 @@ namespace ElmatSvc
         public byte[] Sat { get; set; }
         public byte[] Sun { get; set; }
         public System.DateTime Hour { get; set; }
-        public long Lat { get; set; }
-        public long Lon { get; set; }
+        public double Lat { get; set; }
+        public double Lon { get; set; }
     
         public virtual USER USER { get; set; }
     }

@@ -157,6 +157,7 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Services\RideService.svc" />
     <Content Include="Services\UserService.svc" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
@@ -164,6 +165,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Business\FacebookBLL.cs" />
+    <Compile Include="Business\RideBLL.cs" />
     <Compile Include="Business\UserBLL.cs" />
     <Compile Include="elmatModel.Context.cs">
       <AutoGen>True</AutoGen>
@@ -183,6 +185,7 @@
     <Compile Include="FRIENDS.cs">
       <DependentUpon>elmatModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Messages\Ride.cs" />
     <Compile Include="Messages\User.cs" />
     <Compile Include="RELATION_STATUS.cs">
       <DependentUpon>elmatModel.tt</DependentUpon>
@@ -192,6 +195,10 @@
     </Compile>
     <Compile Include="ROUTINE.cs">
       <DependentUpon>elmatModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="SvcInterfaces\IRideService.cs" />
+    <Compile Include="Services\RideService.svc.cs">
+      <DependentUpon>RideService.svc</DependentUpon>
     </Compile>
     <Compile Include="SvcInterfaces\IUserService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
