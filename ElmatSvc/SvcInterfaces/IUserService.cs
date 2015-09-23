@@ -18,10 +18,10 @@ namespace ElmatSvc
         int RegisterUser(string accessToken);
         [OperationContract]
         User GetUser(UserFilter filter);
-        //[OperationContract]
-        //int FindFriends(User usr, string accessToken);
         [OperationContract]
         string UpdtFriends(User usr, string accessToken);
+        [OperationContract]
+        string BlockFriend(User usr, User friend);
 
     }
 }

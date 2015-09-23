@@ -110,6 +110,7 @@ namespace ElmatSvc.Business
                         FRIENDS f = new FRIENDS();
                         f.UserID_A = usr.UserID;
                         f.UserID_B = fr.UserID;
+                        f.StatusID = 1;
 
                         entities.FRIENDS.Add(f);
                     }
@@ -120,6 +121,28 @@ namespace ElmatSvc.Business
                 {
                     // Adicionar algum log (base ou arquivo mesmo)
                     return false;
+                }
+            }
+        }
+
+        public static string BlockFriend(User usr, User friend)
+        {
+            using (elmatEntities entities = new elmatEntities())
+            {
+                try
+                {
+                    FRIENDS F = (from f in entities.FRIENDS.
+                                   Where(x => (x.UserID_A == usr.UserID && x.UserID_B == friend.UserID)
+                                            || (x.UserID_B == usr.UserID && x.UserID_A == friend.UserID))
+                                 select f).FirstOrDefault();
+
+                    F.StatusID = 2;
+                    entities.SaveChanges();
+                    return "Usuário bloqueado com sucesso";
+                }
+                catch (Exception e)
+                {
+                    return "Não foi possível bloquear o usuário";
                 }
             }
         }

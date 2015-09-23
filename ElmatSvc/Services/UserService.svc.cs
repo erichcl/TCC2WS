@@ -72,6 +72,11 @@ namespace ElmatSvc
             return ret;
         }
 
+        public string BlockFriend(User usr, User friend)
+        {
+            return UserBLL.BlockFriend(usr, friend);
+
+        }
         //public int FindFriends(User usr, string accessToken)
         //{
         //    accessToken = "CAAUqAZAMbo7kBALaLpkyJFvFiXp4ZB0WrPASeZAeEwwY0o3GWZA5i3plvEvbEawStg5qioZCLQmol36gYV8m1FBrC8P30kDO6sc8aP4a0FTkm6yxtpzF1d1ufvOa8w0b3qeIl99AE5SuqWtIHPXZCmQozUTu6JK3VAUjNDoTo3tLSqbFcAwY4LILnNkzZAaZCk1WHRR0Gg2wSwZDZD";
