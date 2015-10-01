@@ -209,6 +209,7 @@
       <DependentUpon>elmatModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Utils\Base16.cs" />
+    <Compile Include="Utils\GeoMath.cs" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />

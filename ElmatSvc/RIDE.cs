@@ -21,7 +21,9 @@ namespace ElmatSvc
         public double LonOrg { get; set; }
         public double LatDest { get; set; }
         public double LonDest { get; set; }
+        public int DriverID { get; set; }
     
         public virtual USER USER { get; set; }
+        public virtual USER USER1 { get; set; }
     }
 }

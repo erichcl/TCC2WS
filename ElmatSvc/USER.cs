@@ -20,6 +20,7 @@ namespace ElmatSvc
             this.FRIENDS1 = new HashSet<FRIENDS>();
             this.RIDE = new HashSet<RIDE>();
             this.ROUTINE = new HashSet<ROUTINE>();
+            this.RIDE1 = new HashSet<RIDE>();
         }
     
         public int UserID { get; set; }
@@ -29,5 +30,6 @@ namespace ElmatSvc
         public virtual ICollection<FRIENDS> FRIENDS1 { get; set; }
         public virtual ICollection<RIDE> RIDE { get; set; }
         public virtual ICollection<ROUTINE> ROUTINE { get; set; }
+        public virtual ICollection<RIDE> RIDE1 { get; set; }
     }
 }

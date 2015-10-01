@@ -15,6 +15,7 @@
         <EntityTypeShape EntityType="elmatModel.ROUTINE" Width="1.5" PointX="3" PointY="5.875" />
         <AssociationConnector Association="elmatModel.RIDE_RIDE_ibfk_1" />
         <AssociationConnector Association="elmatModel.ROUTINE_ROUTINE_ibfk_1" />
+        <AssociationConnector Association="elmatModel.FK__RIDE__DriverID__2D27B809" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

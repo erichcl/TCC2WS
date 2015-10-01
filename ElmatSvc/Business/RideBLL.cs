@@ -4,11 +4,13 @@ using System.Linq;
 using System.Web;
 using ElmatSvc.Business;
 using ElmatSvc.Messages;
+using ElmatSvc.Utils;
 
 namespace ElmatSvc.Business
 {
     public class RideBLL
     {
+
         private static RIDE RideToRIDE(Ride r)
         {
             RIDE R = new RIDE();
@@ -53,22 +55,26 @@ namespace ElmatSvc.Business
             }
         }
 
-        public static List<Ride> ListaCaronas(FiltroRide fr, User solicitante)
+        public static List<Ride> ListaCaronas(FiltroRide fr, User usr)
         {
             using (elmatEntities entities = new elmatEntities())
-            { 
+            {
                 var qryRide = (from R in entities.RIDE.Include("USER") select R);
-                User usr = new User();
 
                 if (fr.RideID.HasValue)
                 {
                     qryRide = qryRide.Where(x => x.RideID == fr.RideID.Value);
                 }
 
-                // solicitante == quem pediu a carona
-                if (solicitante != null)
+                if (fr.DriverID.HasValue)
                 {
-                    qryRide = qryRide.Where(x => x.UserID == solicitante.UserID);
+                    qryRide = qryRide.Where(x => x.DriverID == fr.DriverID.Value);
+                }
+
+                // Quem pediu a carona (talvez implementar no futuro filtro para mais de um usuário)
+                if (fr.UserID != null)
+                {
+                    qryRide = qryRide.Where(x => x.UserID == fr.UserID.Value);
                 }
 
                 if (fr.UserID.HasValue)
@@ -108,5 +114,71 @@ namespace ElmatSvc.Business
                 return qryRes;
             }
         }
+
+        public static List<Ride> ClassificaCaronasSemRota(List<Ride> Lista, double LatOrg, double LonOrg)
+        {
+
+            GeoPoint usrOrg = new GeoPoint(LatOrg, LonOrg);
+            foreach (var r in Lista)
+            {
+                GeoPoint gOrg = new GeoPoint(r.LatOrigem, r.LonOrigem);
+                r.distanciaOrg = (decimal)GeoMath.distanceKM(usrOrg, gOrg);
+            }
+            return Lista;
+        }
+
+        public static List<Ride> ClassificaCaronasComRota(List<Ride> Lista, double LatOrg, double LonOrg, double LatDes, double LonDes)
+        {
+            Ellipse eVrd = new Ellipse(LatOrg, LonOrg, LatDes, LonDes);
+            Ellipse eAmr = new Ellipse();
+            eAmr.witdh = eAmr.witdh * 1.3;
+            eAmr.height = eAmr.height * 1.3;
+
+            GeoPoint usrOrg = new GeoPoint (LatOrg, LonOrg);
+            GeoPoint usrDes = new GeoPoint (LatDes, LonDes);
+
+            foreach (var r in Lista)
+            {
+                GeoPoint gOrg = new GeoPoint(r.LatOrigem, r.LonOrigem);
+                if (eVrd.isPointWithin(gOrg))
+                {
+                    r.classOrg = ClassifiCarona.VERDE;
+                }
+                else if (eAmr.isPointWithin(gOrg))
+                {
+                    r.classOrg = ClassifiCarona.AMARELO;
+                }
+                else
+                {
+                    r.classOrg = ClassifiCarona.VERMELHO;
+                }
+                r.distanciaOrg = (decimal)GeoMath.distanceKM(usrOrg, gOrg);
+
+                GeoPoint gDes = new GeoPoint(r.LatDestino, r.LonDestino);
+                if (eVrd.isPointWithin(gDes))
+                {
+                    r.classDes = ClassifiCarona.VERDE;
+                }
+                else if (eAmr.isPointWithin(gDes))
+                {
+                    r.classDes = ClassifiCarona.AMARELO;
+                }
+                else
+                {
+                    r.classDes = ClassifiCarona.VERMELHO;
+                }
+                r.distanciaDes = (decimal)GeoMath.distanceKM(usrDes, gDes);
+            }
+            return Lista;
+        }
+
+
+        //public static string AtendeCarona(User usr, Ride rd)
+        //{
+        //    using (elmatEntities entities = new elmatEntities())
+        //    { 
+        //        //var qry
+        //    }
+        //}
     }
 }

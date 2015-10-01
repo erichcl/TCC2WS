@@ -33,6 +33,7 @@
           <Property Name="LonOrg" Type="float" Nullable="false" />
           <Property Name="LatDest" Type="float" Nullable="false" />
           <Property Name="LonDest" Type="float" Nullable="false" />
+          <Property Name="DriverID" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="ROUTINE">
           <Key>
@@ -61,6 +62,18 @@
           <Property Name="UserID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="FacebookID" Type="bigint" Nullable="false" />
         </EntityType>
+        <Association Name="FK__RIDE__DriverID__2D27B809">
+          <End Role="USER" Type="Self.USER" Multiplicity="1" />
+          <End Role="RIDE" Type="Self.RIDE" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="USER">
+              <PropertyRef Name="UserID" />
+            </Principal>
+            <Dependent Role="RIDE">
+              <PropertyRef Name="DriverID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FRIENDS$FRIENDS_ibfk_1">
           <End Role="USER" Type="Self.USER" Multiplicity="1" />
           <End Role="FRIENDS" Type="Self.FRIENDS" Multiplicity="*" />
@@ -127,6 +140,10 @@
           <EntitySet Name="RIDE" EntityType="Self.RIDE" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ROUTINE" EntityType="Self.ROUTINE" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="USER" EntityType="Self.USER" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK__RIDE__DriverID__2D27B809" Association="Self.FK__RIDE__DriverID__2D27B809">
+            <End Role="USER" EntitySet="USER" />
+            <End Role="RIDE" EntitySet="RIDE" />
+          </AssociationSet>
           <AssociationSet Name="FRIENDS$FRIENDS_ibfk_1" Association="Self.FRIENDS$FRIENDS_ibfk_1">
             <End Role="USER" EntitySet="USER" />
             <End Role="FRIENDS" EntitySet="FRIENDS" />
@@ -182,6 +199,7 @@
           <NavigationProperty Name="FRIENDS1" Relationship="Self.FRIENDS_FRIENDS_ibfk_2" FromRole="USER" ToRole="FRIENDS" />
           <NavigationProperty Name="RIDE" Relationship="elmatModel.RIDE_RIDE_ibfk_1" FromRole="USER" ToRole="RIDE" />
           <NavigationProperty Name="ROUTINE" Relationship="elmatModel.ROUTINE_ROUTINE_ibfk_1" FromRole="USER" ToRole="ROUTINE" />
+          <NavigationProperty Name="RIDE1" Relationship="elmatModel.FK__RIDE__DriverID__2D27B809" FromRole="USER" ToRole="RIDE" />
         </EntityType>
         <Association Name="FRIENDS_FRIENDS_ibfk_1">
           <End Role="USER" Type="Self.USER" Multiplicity="1" />
@@ -245,6 +263,10 @@
             <End Role="USER" EntitySet="USER" />
             <End Role="ROUTINE" EntitySet="ROUTINE" />
           </AssociationSet>
+          <AssociationSet Name="FK__RIDE__DriverID__2D27B809" Association="elmatModel.FK__RIDE__DriverID__2D27B809">
+            <End Role="USER" EntitySet="USER" />
+            <End Role="RIDE" EntitySet="RIDE" />
+          </AssociationSet>
         </EntityContainer>
         <EntityType Name="RIDE">
           <Key>
@@ -259,6 +281,8 @@
           <Property Name="LatDest" Type="Double" Nullable="false" />
           <Property Name="LonDest" Type="Double" Nullable="false" />
           <NavigationProperty Name="USER" Relationship="elmatModel.RIDE_RIDE_ibfk_1" FromRole="RIDE" ToRole="USER" />
+          <Property Name="DriverID" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="USER1" Relationship="elmatModel.FK__RIDE__DriverID__2D27B809" FromRole="RIDE" ToRole="USER" />
         </EntityType>
         <EntityType Name="ROUTINE">
           <Key>
@@ -305,6 +329,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK__RIDE__DriverID__2D27B809">
+          <End Type="elmatModel.USER" Role="USER" Multiplicity="1" />
+          <End Type="elmatModel.RIDE" Role="RIDE" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="USER">
+              <PropertyRef Name="UserID" />
+            </Principal>
+            <Dependent Role="RIDE">
+              <PropertyRef Name="DriverID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -339,6 +375,7 @@
           <EntitySetMapping Name="RIDE">
             <EntityTypeMapping TypeName="elmatModel.RIDE">
               <MappingFragment StoreEntitySet="RIDE">
+                <ScalarProperty Name="DriverID" ColumnName="DriverID" />
                 <ScalarProperty Name="LonDest" ColumnName="LonDest" />
                 <ScalarProperty Name="LatDest" ColumnName="LatDest" />
                 <ScalarProperty Name="LonOrg" ColumnName="LonOrg" />
