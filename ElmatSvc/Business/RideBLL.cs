@@ -173,12 +173,14 @@ namespace ElmatSvc.Business
         }
 
 
-        //public static string AtendeCarona(User usr, Ride rd)
-        //{
-        //    using (elmatEntities entities = new elmatEntities())
-        //    { 
-        //        //var qry
-        //    }
-        //}
+        public static void AtendeCarona(User usr, Ride rd)
+        {
+            using (elmatEntities entities = new elmatEntities())
+            {
+                var ride = (from R in entities.RIDE.Where(x => x.RideID == rd.RideID) select R).FirstOrDefault();
+                ride.DriverID = usr.UserID;
+                entities.SaveChanges();
+            }
+        }
     }
 }

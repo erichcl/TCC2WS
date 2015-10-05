@@ -16,7 +16,7 @@ namespace ElmatSvc
         string CadastraCarona(Ride R);
         [OperationContract]
         List<Ride> ListaSolCaronas(FiltroRide busca, User usr, double LatOrg, double LonOrg, double? LatDes, double? LonDes);
-        //[OperationContract]
-        //string AtendeSolicitacaoCarona(User usr, int RideID);
+        [OperationContract]
+        bool AtendeSolicitacaoCarona(User usr, int RideID);
     }
 }

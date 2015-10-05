@@ -74,7 +74,9 @@ namespace ElmatSvc.Utils
         public double witdh { get; set; }
         public double height { get; set; }
 
-        public Ellipse();
+        public Ellipse()
+        { 
+        }
         public Ellipse(double lat1, double lon1, double lat2, double lon2)
         {
             GeoPoint elipseMiddle = GeoMath.getMiddlePoint(lat1, lon1, lat2, lon2);

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.Serialization;
-using System.ServiceModel;
+//using System.ServiceModel;
 using System.Text;
 using ElmatSvc.Business;
 using ElmatSvc.Messages;
@@ -47,9 +47,12 @@ namespace ElmatSvc
             
         }
 
-        //string AtendeSolicitacaoCarona(User usr, int RideID)
-        //{
-        //    return "teste"; 
-        //}
+        public bool AtendeSolicitacaoCarona(User usr, int RideID)
+        {
+            Ride rd = new Ride();
+            rd.RideID = RideID;
+            RideBLL.AtendeCarona(usr, rd);
+            return true;
+        }
     }
 }
