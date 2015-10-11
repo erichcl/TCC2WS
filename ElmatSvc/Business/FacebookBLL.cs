@@ -30,7 +30,7 @@ namespace ElmatSvc.Business
             var client = new FacebookClient(accessToken);
             client.AppId = "1453561134949305";
             dynamic userData = client.Get("/me?fields=id");
-            Int64 retID = Int64.Parse(userData[0].id);
+            Int64 retID = Int64.Parse(userData["id"]);
             return retID;
         }
 
