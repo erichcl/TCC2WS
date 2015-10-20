@@ -1,1 +1,0 @@
-﻿<%@ ServiceHost Language="C#" Debug="true" Service="ElmatSvc.Services.RideService" CodeBehind="RideService.svc.cs" %>
