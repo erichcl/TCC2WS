@@ -97,6 +97,8 @@ namespace ElmatSvc
 
         public List<Ride> ListaSolCaronas(FiltroRide busca, User usr, double LatOrg, double LonOrg, double? LatDes, double? LonDes)
         {
+            if (busca == null)
+                busca = new FiltroRide();
             // Lista as caronas disponíveis para o usuário
             List<Ride> Lista = RideBLL.ListaCaronas(busca, usr);
 
