@@ -5,29 +5,42 @@ using System.Runtime.Serialization;
 using System.ServiceModel;
 using System.Text;
 using ElmatSvc.Messages;
+using System.ServiceModel.Web;
+using System.IO;
 
 namespace ElmatSvc
 {
     // NOTE: You can use the "Rename" command on the "Refactor" menu to change the interface name "IUserService" in both code and config file together.
-    [ServiceContract(Namespace="http://www.elmat.kinghost.net/elmatservices/Services/UserService") ]
+    [ServiceContract(Namespace = "ElmatSvc.UserService", Name = "UserService")]
     public interface IUserService
     {
         [OperationContract]
-        string getMessage(string message);
+        [WebInvoke(Method = "POST", BodyStyle = WebMessageBodyStyle.Bare, RequestFormat = WebMessageFormat.Json, ResponseFormat = WebMessageFormat.Json, UriTemplate = "/getMessage")]
+        Stream getMessage(Stream postData);
+        
         [OperationContract]
-        int RegisterUser(string accessToken);
+        [WebInvoke(Method = "POST", BodyStyle = WebMessageBodyStyle.Bare, RequestFormat = WebMessageFormat.Json, ResponseFormat = WebMessageFormat.Json, UriTemplate = "/RegisterUser")]
+        Stream RegisterUser(Stream postData);
+        
         [OperationContract]
-        User GetUser(UserFilter filter);
+        [WebInvoke(Method = "POST", BodyStyle = WebMessageBodyStyle.Bare, RequestFormat = WebMessageFormat.Json, ResponseFormat = WebMessageFormat.Json, UriTemplate = "/UpdtFriends")]
+        Stream UpdtFriends(Stream postData);
+        
         [OperationContract]
-        string UpdtFriends(User usr, string accessToken);
+        [WebInvoke(Method = "POST", BodyStyle = WebMessageBodyStyle.Bare, RequestFormat = WebMessageFormat.Json, ResponseFormat = WebMessageFormat.Json, UriTemplate = "/BlockFriend")]
+        Stream BlockFriend(Stream postData);
+        
         [OperationContract]
-        string BlockFriend(User usr, User friend);
+        [WebInvoke(Method = "POST", BodyStyle = WebMessageBodyStyle.Bare, RequestFormat = WebMessageFormat.Json, ResponseFormat = WebMessageFormat.Json, UriTemplate = "/CadastraCarona")]
+        Stream CadastraCarona(Stream postData);
+        
         [OperationContract]
-        string CadastraCarona(Ride R);
+        [WebInvoke(Method = "POST", BodyStyle = WebMessageBodyStyle.Bare, RequestFormat = WebMessageFormat.Json, ResponseFormat = WebMessageFormat.Json, UriTemplate = "/ListaSolCaronas")]
+        Stream ListaSolCaronas(Stream postData);
+        
         [OperationContract]
-        List<Ride> ListaSolCaronas(FiltroRide busca, User usr, double LatOrg, double LonOrg, double? LatDes, double? LonDes);
-        [OperationContract]
-        bool AtendeSolicitacaoCarona(User usr, int RideID);
+        [WebInvoke(Method = "POST", BodyStyle = WebMessageBodyStyle.Bare, RequestFormat = WebMessageFormat.Json, ResponseFormat = WebMessageFormat.Json, UriTemplate = "/AtendeSolicitacaoCarona")]
+        Stream AtendeSolicitacaoCarona(Stream postData);
 
     }
 }

@@ -18,8 +18,8 @@ namespace ElmatSvc
         public int UserID_B { get; set; }
         public long StatusID { get; set; }
     
+        public virtual RELATION_STATUS RELATION_STATUS { get; set; }
         public virtual USER USER { get; set; }
         public virtual USER USER1 { get; set; }
-        public virtual RELATION_STATUS RELATION_STATUS { get; set; }
     }
 }

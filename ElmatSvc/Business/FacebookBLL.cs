@@ -7,6 +7,7 @@ using System.Web;
 using System.Security.Cryptography;
 using System.Text;
 using ElmatSvc.Utils;
+using ElmatSvc.Messages;
 
 namespace ElmatSvc.Business
 {
@@ -25,13 +26,15 @@ namespace ElmatSvc.Business
         }
 
 
-        public static Int64 FBGetID(string accessToken)
+        public static User  FBGetID(string accessToken)
         {
             var client = new FacebookClient(accessToken);
             client.AppId = "1453561134949305";
-            dynamic userData = client.Get("/me?fields=id");
-            Int64 retID = Int64.Parse(userData["id"]);
-            return retID;
+            dynamic userData = client.Get("/me?fields=id,name");
+            User usrRetorno = new User();
+            usrRetorno.FacebookID = Int64.Parse(userData["id"]);
+            usrRetorno.Name = userData["name"];
+            return usrRetorno;
         }
 
         public static List<Int64> FBGetFriends(string accessToken)

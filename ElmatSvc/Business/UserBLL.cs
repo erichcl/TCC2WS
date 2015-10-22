@@ -20,13 +20,13 @@ namespace ElmatSvc.Business
             using (elmatEntities entities = new elmatEntities())
             {
                 var qrySearch = (from u in entities.USER select u);
-                if (UsrSearch.FbID != null)
+                if (UsrSearch.FacebookID != null)
                 {
-                    qrySearch = qrySearch.Where(x => x.FacebookID == UsrSearch.FbID);
+                    qrySearch = qrySearch.Where(x => x.FacebookID == UsrSearch.FacebookID);
                 }
-                if (UsrSearch.UsrID != null)
+                if (UsrSearch.UserID != null)
                 {
-                    qrySearch = qrySearch.Where(x => x.UserID == UsrSearch.UsrID);
+                    qrySearch = qrySearch.Where(x => x.UserID == UsrSearch.UserID);
                 }
 
                 User retUsr = (from q in qrySearch
@@ -39,29 +39,18 @@ namespace ElmatSvc.Business
             }
         }
 
-        public static User RegisterUser( Int64 FbID )
+        public static User RegisterUser( User FbUser )
         {
             using (elmatEntities entities = new elmatEntities())
             {
                 USER U = new USER();
-                User retUsr = new User();
-                U.FacebookID = FbID;
-                try 
-                {
-                    entities.USER.Add(U);
-                    entities.SaveChanges();
-                    retUsr.FacebookID = U.FacebookID;
-                    retUsr.UserID = U.UserID;
+                U.FacebookID = FbUser.FacebookID;
+                U.Name = FbUser.Name;
+                entities.USER.Add(U);
+                entities.SaveChanges();
 
-                    return retUsr;
-                }
-                catch(Exception e) 
-                {
-                    SoapException se = new SoapException("Fault occurred",
-                                            SoapException.ClientFaultCode,
-                                            e);
-                    throw se;
-                }
+                FbUser.UserID = U.UserID;
+                return FbUser;
             }
         }
 
@@ -88,19 +77,12 @@ namespace ElmatSvc.Business
 
                 var UnAddedFriends = (from RF in ReceivedFriends.Where(x => !AlreadyFriends.Contains(x.UserID)) select RF).ToList();
 
-                bool added = AddFriends(UnAddedFriends, usr);
-                if (added)
-                {
-                    return UnAddedFriends.Count();
-                }
-                else
-                {
-                    return -1;
-                }
+                AddFriends(UnAddedFriends, usr);
+                return UnAddedFriends.Count();
             }
         }
 
-        private static bool AddFriends(List<User> FriendsToAdd, User usr)
+        private static void AddFriends(List<User> FriendsToAdd, User usr)
         {
             using (elmatEntities entities = new elmatEntities())
             {
@@ -115,35 +97,25 @@ namespace ElmatSvc.Business
                         entities.FRIENDS.Add(f);
                     }
                     entities.SaveChanges();
-                    return true;
                 }
                 catch (Exception e)
                 {
-                    // Adicionar algum log (base ou arquivo mesmo)
-                    return false;
+                    throw e;
                 }
             }
         }
 
-        public static string BlockFriend(User usr, User friend)
+        public static void BlockFriend(User usr, User friend)
         {
             using (elmatEntities entities = new elmatEntities())
             {
-                try
-                {
-                    FRIENDS F = (from f in entities.FRIENDS.
-                                   Where(x => (x.UserID_A == usr.UserID && x.UserID_B == friend.UserID)
-                                            || (x.UserID_B == usr.UserID && x.UserID_A == friend.UserID))
-                                 select f).FirstOrDefault();
+                FRIENDS F = (from f in entities.FRIENDS.
+                                Where(x => (x.UserID_A == usr.UserID && x.UserID_B == friend.UserID)
+                                        || (x.UserID_B == usr.UserID && x.UserID_A == friend.UserID))
+                                select f).FirstOrDefault();
 
-                    F.StatusID = 2;
-                    entities.SaveChanges();
-                    return "Usuário bloqueado com sucesso";
-                }
-                catch (Exception e)
-                {
-                    return "Não foi possível bloquear o usuário";
-                }
+                F.StatusID = 2;
+                entities.SaveChanges();
             }
         }
 
