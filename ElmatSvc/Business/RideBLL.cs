@@ -59,7 +59,7 @@ namespace ElmatSvc.Business
         {
             using (elmatEntities entities = new elmatEntities())
             {
-                var qryRide = (from R in entities.RIDE.Include("USER") select R);
+                var qryRide = (from R in entities.RIDE.Include("USER1") select R);
 
                 if (fr.RideID.HasValue)
                 {
@@ -100,8 +100,9 @@ namespace ElmatSvc.Business
                               select new Ride
                               {
                                   usr = new User {
-                                      UserID = q.USER.UserID,
-                                      FacebookID = q.USER.FacebookID
+                                      UserID = q.USER1.UserID,
+                                      FacebookID = q.USER1.FacebookID,
+                                      Name = q.USER1.Name
                                   },
                                   RideID = q.RideID,
                                   Hour = q.Hour,
@@ -115,10 +116,8 @@ namespace ElmatSvc.Business
             }
         }
 
-        public static List<Ride> ClassificaCaronasSemRota(List<Ride> Lista, double LatOrg, double LonOrg)
+        public static List<Ride> ClassificaCaronasSemRota(List<Ride> Lista, GeoPoint usrOrg)
         {
-
-            GeoPoint usrOrg = new GeoPoint(LatOrg, LonOrg);
             foreach (var r in Lista)
             {
                 GeoPoint gOrg = new GeoPoint(r.LatOrigem, r.LonOrigem);
@@ -127,15 +126,13 @@ namespace ElmatSvc.Business
             return Lista;
         }
 
-        public static List<Ride> ClassificaCaronasComRota(List<Ride> Lista, double LatOrg, double LonOrg, double LatDes, double LonDes)
+        public static List<Ride> ClassificaCaronasComRota(List<Ride> Lista, GeoPoint usrOrg, GeoPoint usrDes)
         {
-            Ellipse eVrd = new Ellipse(LatOrg, LonOrg, LatDes, LonDes);
+            Ellipse eVrd = new Ellipse(usrOrg, usrDes);
             Ellipse eAmr = new Ellipse();
-            eAmr.witdh = eAmr.witdh * 1.3;
-            eAmr.height = eAmr.height * 1.3;
-
-            GeoPoint usrOrg = new GeoPoint (LatOrg, LonOrg);
-            GeoPoint usrDes = new GeoPoint (LatDes, LonDes);
+            eAmr.witdh = eVrd.witdh * 1.3;
+            eAmr.height = eVrd.height * 1.3;
+            eAmr.Center = eVrd.Center;
 
             foreach (var r in Lista)
             {

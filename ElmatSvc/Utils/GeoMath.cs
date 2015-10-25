@@ -24,8 +24,8 @@ namespace ElmatSvc.Utils
         public static GeoPoint getMiddlePoint(double lat1, double lon1, double lat2, double lon2)
         {
             GeoPoint gp = new GeoPoint();
-            gp.Lat = (lat1 + lat2) / 2;
-            gp.Lon = (lon1 + lon2) / 2;
+            gp.Latitude = (lat1 + lat2) / 2;
+            gp.Longitude = (lon1 + lon2) / 2;
             return gp;
         }
 
@@ -38,7 +38,7 @@ namespace ElmatSvc.Utils
 
         public static double distanceKM(GeoPoint g1, GeoPoint g2)
         {
-            return distanceKM(g1.Lat, g1.Lon, g2.Lat, g2.Lon);
+            return distanceKM(g1.Latitude, g1.Longitude, g2.Latitude, g2.Longitude);
         }
 
         public static double distanceKM(double lat1, double lon1, double lat2, double lon2)
@@ -55,16 +55,16 @@ namespace ElmatSvc.Utils
 
     public class GeoPoint
     {
-        public double Lat {get; set;}
-        public double Lon {get; set;}
+        public double Latitude {get; set;}
+        public double Longitude {get; set;}
 
         public GeoPoint()
         {
         }
         public GeoPoint (double pLat, double pLon)
         {
-            this.Lat = pLat;
-            this.Lon = pLon;
+            this.Latitude = pLat;
+            this.Longitude = pLon;
         }
     }
 
@@ -77,6 +77,21 @@ namespace ElmatSvc.Utils
         public Ellipse()
         { 
         }
+
+        public Ellipse(GeoPoint pt1, GeoPoint pt2)
+        {
+            double lat1 = pt1.Latitude;
+            double lon1 = pt1.Longitude;
+            double lat2 = pt2.Latitude;
+            double lon2 = pt2.Longitude;
+
+            GeoPoint elipseMiddle = GeoMath.getMiddlePoint(lat1, lon1, lat2, lon2);
+            double distance = GeoMath.distanceLatLong(lat1, lon1, lat2, lon2);
+            Center = elipseMiddle;
+            witdh = distance;
+            height = distance / 2;
+        }
+
         public Ellipse(double lat1, double lon1, double lat2, double lon2)
         {
             GeoPoint elipseMiddle = GeoMath.getMiddlePoint(lat1, lon1, lat2, lon2);
@@ -88,8 +103,8 @@ namespace ElmatSvc.Utils
 
         public bool isPointWithin(GeoPoint point)
         {
-            double A = Math.Pow(point.Lat - Center.Lat, 2) / Math.Pow(witdh / 2, 2);
-            double B = Math.Pow(point.Lon - Center.Lon, 2) / Math.Pow(height / 2, 2);
+            double A = Math.Pow(point.Latitude - Center.Latitude, 2) / Math.Pow(witdh / 2, 2);
+            double B = Math.Pow(point.Longitude - Center.Longitude, 2) / Math.Pow(height / 2, 2);
             if (A+B <= 1)
             {
                 return true;

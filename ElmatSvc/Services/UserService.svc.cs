@@ -9,6 +9,9 @@ using ElmatSvc.Messages;
 using System.IO;
 using System.Web.Script.Serialization;
 using WCFGenerico.Utils;
+using ElmatSvc.Utils;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
 
 namespace ElmatSvc
 {
@@ -198,43 +201,25 @@ namespace ElmatSvc
                 Ride R = jss.Deserialize<Ride>(json);
 
                 Dictionary<string, string> sData = jss.Deserialize<Dictionary<string, string>>(json);
-                FiltroRide busca = jss.Deserialize<FiltroRide>(sData["busca"]);
-                User usr = jss.Deserialize<User>(sData["usr"]);
-                double LatOrg = double.Parse(sData["LatOrg"]);
-                double LonOrg = double.Parse(sData["LonOrg"]);
-                double? LatDes;
-                if (sData["LatDes"] != null)
-                {
-                    LatDes =  double.Parse(sData["LatDes"].ToString());
-                }
-                else
-                {
-                    LatDes = null;
-                }
-
-                double? LonDes;
-                if (sData["LonDes"] != null)
-                {
-                    LonDes = double.Parse(sData["LonDes"].ToString());
-                }
-                else
-                {
-                    LonDes = null;
-                }
+                //FiltroRide busca = jss.Deserialize<FiltroRide>(sData["busca"]);
+                FiltroRide busca = null;
+                User usr = jss.Deserialize<User>(sData["User"]);
+                GeoPoint org = jss.Deserialize<GeoPoint>(sData["Origem"]);
+                GeoPoint dest = jss.Deserialize<GeoPoint>(sData["Destino"]);
 
                 if (busca == null)
                     busca = new FiltroRide();
                 // Lista as caronas disponíveis para o usuário
                 List<Ride> Lista = RideBLL.ListaCaronas(busca, usr);
 
-                if (!LatDes.HasValue || !LonDes.HasValue)
+                if (dest == null)
                 {
-                    Lista = RideBLL.ClassificaCaronasSemRota(Lista, LatOrg, LonOrg);
+                    Lista = RideBLL.ClassificaCaronasSemRota(Lista, org);
                 }
                 else
                 {
                     //O usuário definiu uma rota com destino, ao avaliar a carona levar em consideração sua localização
-                    Lista = RideBLL.ClassificaCaronasComRota(Lista, LatOrg, LonOrg, LatDes.Value, LonDes.Value);
+                    Lista = RideBLL.ClassificaCaronasComRota(Lista, org, dest);
                 }
 
                 dicReturn.Add("SUCCESS", true);
@@ -250,8 +235,12 @@ namespace ElmatSvc
                 dicReturn.Add("EXCEPTION", e.Message);
             }
 
-            JavaScriptSerializer jss2 = new JavaScriptSerializer();
-            String returnJson = jss2.Serialize(dicReturn);
+            JsonSerializerSettings serializerSettings = new JsonSerializerSettings();
+            serializerSettings.Converters.Add(new IsoDateTimeConverter());
+            JsonSerializer js = new JsonSerializer();
+            string returnJson = JsonConvert.SerializeObject(dicReturn, serializerSettings);
+            //JavaScriptSerializer jss2 = new JavaScriptSerializer();
+            //String returnJson = jss2.Serialize(dicReturn);
             return Util.GetJsonStream(returnJson);
         }
 
