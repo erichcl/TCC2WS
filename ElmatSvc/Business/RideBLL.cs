@@ -96,7 +96,7 @@ namespace ElmatSvc.Business
                     qryRide = qryRide.Where(x => x.Hour <= fr.HoraFim.Value);
                 }
 
-                var qryRes = (from q in qryRide
+                var qryRes = (from q in qryRide.Where(x => x.DriverID == null)
                               select new Ride
                               {
                                   usr = new User {

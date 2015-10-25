@@ -253,7 +253,6 @@ namespace ElmatSvc
                 string json = new StreamReader(postData).ReadToEnd();
 
                 Dictionary<string, string> sData = jss.Deserialize<Dictionary<string, string>>(json);
-                FiltroRide busca = jss.Deserialize<FiltroRide>(sData["busca"]);
                 User usr = jss.Deserialize<User>(sData["usr"]);
                 int RideID = int.Parse(sData["RideID"]);
 
