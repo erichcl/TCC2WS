@@ -122,6 +122,9 @@ namespace ElmatSvc.Business
             {
                 GeoPoint gOrg = new GeoPoint(r.LatOrigem, r.LonOrigem);
                 r.distanciaOrg = (decimal)GeoMath.distanceKM(usrOrg, gOrg);
+
+                r.classOrg = ClassifiCarona.NONE;
+                r.classDes = ClassifiCarona.NONE;
             }
             return Lista;
         }

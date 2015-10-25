@@ -5,7 +5,7 @@ using System.Web;
 
 namespace ElmatSvc.Messages
 {
-    public enum ClassifiCarona {VERDE, AMARELO, VERMELHO}
+    public enum ClassifiCarona {VERDE, AMARELO, VERMELHO, NONE}
     public class Ride
     {
         public int? RideID {get; set;}
