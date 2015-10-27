@@ -171,6 +171,7 @@ namespace ElmatSvc
                 var jss = new JavaScriptSerializer();
                 string json = new StreamReader(postData).ReadToEnd();
                 Ride R = jss.Deserialize<Ride>(json);
+                R.Hour = DateTime.Now;
                 R = RideBLL.CadastraRide(R);
 
                 dicReturn.Add("SUCCESS", true);
@@ -185,9 +186,10 @@ namespace ElmatSvc
                 dicReturn.Add("RETORNO", "");
                 dicReturn.Add("EXCEPTION", e.Message);
             }
-
-            JavaScriptSerializer jss2 = new JavaScriptSerializer();
-            String returnJson = jss2.Serialize(dicReturn);
+            JsonSerializerSettings serializerSettings = new JsonSerializerSettings();
+            serializerSettings.Converters.Add(new IsoDateTimeConverter());
+            JsonSerializer js = new JsonSerializer();
+            string returnJson = JsonConvert.SerializeObject(dicReturn, serializerSettings);
             return Util.GetJsonStream(returnJson);
         }
 
@@ -272,9 +274,10 @@ namespace ElmatSvc
                 dicReturn.Add("RETORNO", "");
                 dicReturn.Add("EXCEPTION", e.Message);
             }
-
-            JavaScriptSerializer jss2 = new JavaScriptSerializer();
-            String returnJson = jss2.Serialize(dicReturn);
+            JsonSerializerSettings serializerSettings = new JsonSerializerSettings();
+            serializerSettings.Converters.Add(new IsoDateTimeConverter());
+            JsonSerializer js = new JsonSerializer();
+            string returnJson = JsonConvert.SerializeObject(dicReturn, serializerSettings);
             return Util.GetJsonStream(returnJson);
         }
     }

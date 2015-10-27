@@ -46,7 +46,8 @@ namespace ElmatSvc.Business
                 {
                     entities.RIDE.Add(R);
                     entities.SaveChanges();
-                    return RIDEToRide(R);
+                    r.RideID = R.RideID;
+                    return r;
                 }
                 catch (Exception e)
                 {
@@ -96,7 +97,7 @@ namespace ElmatSvc.Business
                     qryRide = qryRide.Where(x => x.Hour <= fr.HoraFim.Value);
                 }
 
-                var qryRes = (from q in qryRide.Where(x => x.DriverID == null)
+                var qryRes = (from q in qryRide.Where(x => x.DriverID == null && x.UserID != usr.UserID)
                               select new Ride
                               {
                                   usr = new User {
