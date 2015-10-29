@@ -105,7 +105,7 @@ namespace ElmatSvc.Business
             }
         }
 
-        public static void BlockFriend(User usr, User friend)
+        public static void BlockFriend(User usr, User friend, bool isBlocked)
         {
             using (elmatEntities entities = new elmatEntities())
             {
@@ -114,7 +114,15 @@ namespace ElmatSvc.Business
                                         || (x.UserID_B == usr.UserID && x.UserID_A == friend.UserID))
                                 select f).FirstOrDefault();
 
-                F.StatusID = 2;
+                if (isBlocked)
+                {
+                    F.StatusID = 2;
+                }
+                else
+                {
+                    F.StatusID = 1;
+                }
+                
                 entities.SaveChanges();
             }
         }
@@ -128,7 +136,8 @@ namespace ElmatSvc.Business
                                       join UB in entities.USER on F.UserID_B equals UB.UserID
                                       select new User {
                                           FacebookID = F.UserID_A == usr.UserID ? UB.FacebookID : UA.FacebookID,
-                                          UserID = F.UserID_A == usr.UserID ? UB.UserID : UA.UserID
+                                          UserID = F.UserID_A == usr.UserID ? UB.UserID : UA.UserID,
+                                          Name = F.UserID_A == usr.UserID ? UB.Name : UA.Name
                                       }).ToList();
                 return AlreadyFriends;
             }

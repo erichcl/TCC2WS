@@ -141,8 +141,9 @@ namespace ElmatSvc
                 string json = new StreamReader(postData).ReadToEnd();
                 Dictionary<string, string> sData = jss.Deserialize<Dictionary<string, string>>(json);
                 User usr =  jss.Deserialize<User>(sData["User"]);
-                User friend = jss.Deserialize<User>(sData["friend"]);
-                UserBLL.BlockFriend(usr, friend);
+                User friend = jss.Deserialize<User>(sData["Friend"]);
+                bool isBlocked = jss.Deserialize<bool>(sData["isBlocked"]);
+                UserBLL.BlockFriend(usr, friend, isBlocked);
 
                 dicReturn.Add("SUCCESS", true);
                 dicReturn.Add("CODMENSAGEM", "");
@@ -162,6 +163,33 @@ namespace ElmatSvc
              return Util.GetJsonStream(returnJson);
         }
 
+        public Stream GetFriends(Stream postData)   
+        {
+            Dictionary<string, object> dicReturn = new Dictionary<string, object>();
+            try
+            {
+                var jss = new JavaScriptSerializer();
+                string json = new StreamReader(postData).ReadToEnd();
+                User usr = jss.Deserialize<User>(json);
+                List<User> Friends = UserBLL.getUserFriends(usr);
+
+                dicReturn.Add("SUCCESS", true);
+                dicReturn.Add("CODMENSAGEM", "");
+                dicReturn.Add("RETORNO", Friends);
+                dicReturn.Add("EXCEPTION", "");
+            }
+            catch (Exception e)
+            {
+                dicReturn.Add("SUCCESS", false);
+                dicReturn.Add("CODMENSAGEM", "");
+                dicReturn.Add("RETORNO", "");
+                dicReturn.Add("EXCEPTION", e.Message);
+            }
+
+            JavaScriptSerializer jss2 = new JavaScriptSerializer();
+            String returnJson = jss2.Serialize(dicReturn);
+            return Util.GetJsonStream(returnJson);
+        }
 
         public Stream CadastraCarona(Stream postData)
         {
