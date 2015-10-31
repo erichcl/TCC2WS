@@ -166,6 +166,7 @@
   <ItemGroup>
     <Compile Include="Business\FacebookBLL.cs" />
     <Compile Include="Business\RideBLL.cs" />
+    <Compile Include="Business\RoutineBLL.cs" />
     <Compile Include="Business\UserBLL.cs" />
     <Compile Include="elmatModel.Context.cs">
       <AutoGen>True</AutoGen>
@@ -186,6 +187,7 @@
       <DependentUpon>elmatModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Messages\Ride.cs" />
+    <Compile Include="Messages\Routine.cs" />
     <Compile Include="Messages\User.cs" />
     <Compile Include="RELATION_STATUS.cs">
       <DependentUpon>elmatModel.tt</DependentUpon>

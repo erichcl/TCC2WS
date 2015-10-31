@@ -8,13 +8,13 @@
         <EntityTypeShape EntityType="elmatModel.FRIENDS" Width="1.5" PointX="3" PointY="2.25" IsExpanded="true" />
         <EntityTypeShape EntityType="elmatModel.RELATION_STATUS" Width="1.5" PointX="0.75" PointY="2.5" IsExpanded="true" />
         <AssociationConnector Association="elmatModel.FRIENDS_StatusID_RelationStatus" ManuallyRouted="false" />
-        <EntityTypeShape EntityType="elmatModel.ROUTINE" Width="1.5" PointX="3" PointY="5.875" />
         <EntityTypeShape EntityType="elmatModel.RIDE" Width="1.5" PointX="3" PointY="10.5" />
         <EntityTypeShape EntityType="elmatModel.USER" Width="1.5" PointX="0.75" PointY="5.625" />
         <AssociationConnector Association="elmatModel.FRIENDS_FRIENDS_ibfk_1" />
         <AssociationConnector Association="elmatModel.FRIENDS_FRIENDS_ibfk_2" />
         <AssociationConnector Association="elmatModel.FK__RIDE__DriverID__36B12243" />
         <AssociationConnector Association="elmatModel.RIDE_RIDE_ibfk_1" />
+        <EntityTypeShape EntityType="elmatModel.ROUTINE" Width="1.5" PointX="3" PointY="15" />
         <AssociationConnector Association="elmatModel.ROUTINE_ROUTINE_ibfk_1" />
       </Diagram>
     </edmx:Diagrams>

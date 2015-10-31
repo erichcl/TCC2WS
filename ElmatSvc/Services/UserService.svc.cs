@@ -51,6 +51,9 @@ namespace ElmatSvc
             return Util.GetJsonStream(returnJson);
         }
 
+
+        #region USUARIO
+        
         public Stream RegisterUser(Stream postData)
         {
             Dictionary<string, object> dicReturn = new Dictionary<string, object>();
@@ -191,6 +194,107 @@ namespace ElmatSvc
             return Util.GetJsonStream(returnJson);
         }
 
+        #endregion
+
+        #region ROTINA
+
+        public Stream AddRoutine(Stream postData)
+        {
+            Dictionary<string, object> dicReturn = new Dictionary<string, object>();
+            try
+            {
+                var jss = new JavaScriptSerializer();
+                string json = new StreamReader(postData).ReadToEnd();
+                Dictionary<string, string> sData = jss.Deserialize<Dictionary<string, string>>(json);
+                User usr = jss.Deserialize<User>(sData["User"]);
+                Routine Routine = jss.Deserialize<Routine>(sData["Routine"]);
+                Routine = RoutineBLL.RegisterRoutine(usr, Routine);
+
+                dicReturn.Add("SUCCESS", true);
+                dicReturn.Add("CODMENSAGEM", "");
+                dicReturn.Add("RETORNO", Routine);
+                dicReturn.Add("EXCEPTION", "");
+            }
+            catch (Exception e)
+            {
+                dicReturn.Add("SUCCESS", false);
+                dicReturn.Add("CODMENSAGEM", "");
+                dicReturn.Add("RETORNO", "");
+                dicReturn.Add("EXCEPTION", e.Message);
+            }
+
+            JsonSerializerSettings serializerSettings = new JsonSerializerSettings();
+            serializerSettings.Converters.Add(new IsoDateTimeConverter());
+            JsonSerializer js = new JsonSerializer();
+            string returnJson = JsonConvert.SerializeObject(dicReturn, serializerSettings);
+            return Util.GetJsonStream(returnJson);
+        }
+
+        public Stream DelRoutine(Stream postData)
+        {
+            Dictionary<string, object> dicReturn = new Dictionary<string, object>();
+            try
+            {
+                var jss = new JavaScriptSerializer();
+                string json = new StreamReader(postData).ReadToEnd();
+                Dictionary<string, string> sData = jss.Deserialize<Dictionary<string, string>>(json);
+                User usr = jss.Deserialize<User>(sData["User"]);
+                Routine Routine = jss.Deserialize<Routine>(sData["Routine"]);
+                RoutineBLL.DeleteRoutine(usr, Routine);
+
+                dicReturn.Add("SUCCESS", true);
+                dicReturn.Add("CODMENSAGEM", "");
+                dicReturn.Add("RETORNO", "");
+                dicReturn.Add("EXCEPTION", "");
+            }
+            catch (Exception e)
+            {
+                dicReturn.Add("SUCCESS", false);
+                dicReturn.Add("CODMENSAGEM", "");
+                dicReturn.Add("RETORNO", "");
+                dicReturn.Add("EXCEPTION", e.Message);
+            }
+
+            JavaScriptSerializer jss2 = new JavaScriptSerializer();
+            String returnJson = jss2.Serialize(dicReturn);
+            return Util.GetJsonStream(returnJson);
+        }
+
+        public Stream GetRoutines(Stream postData)
+        {
+            Dictionary<string, object> dicReturn = new Dictionary<string, object>();
+            try
+            {
+                var jss = new JavaScriptSerializer();
+                string json = new StreamReader(postData).ReadToEnd();
+                User usr = jss.Deserialize<User>(json);
+                List<Routine> Routines = RoutineBLL.GetUserRoutine(usr);
+
+                dicReturn.Add("SUCCESS", true);
+                dicReturn.Add("CODMENSAGEM", "");
+                dicReturn.Add("RETORNO", Routines);
+                dicReturn.Add("EXCEPTION", "");
+            }
+            catch (Exception e)
+            {
+                dicReturn.Add("SUCCESS", false);
+                dicReturn.Add("CODMENSAGEM", "");
+                dicReturn.Add("RETORNO", "");
+                dicReturn.Add("EXCEPTION", e.Message);
+            }
+
+            JsonSerializerSettings serializerSettings = new JsonSerializerSettings();
+            serializerSettings.Converters.Add(new IsoDateTimeConverter());
+            JsonSerializer js = new JsonSerializer();
+            string returnJson = JsonConvert.SerializeObject(dicReturn, serializerSettings);
+            return Util.GetJsonStream(returnJson);
+        }
+
+        #endregion
+
+
+        #region CARONAS
+
         public Stream CadastraCarona(Stream postData)
         {
             Dictionary<string, object> dicReturn = new Dictionary<string, object>();
@@ -308,5 +412,7 @@ namespace ElmatSvc
             string returnJson = JsonConvert.SerializeObject(dicReturn, serializerSettings);
             return Util.GetJsonStream(returnJson);
         }
+
+        #endregion
     }
 }

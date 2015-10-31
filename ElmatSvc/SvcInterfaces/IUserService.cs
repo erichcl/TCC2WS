@@ -14,18 +14,22 @@ namespace ElmatSvc
     [ServiceContract(Namespace = "ElmatSvc.UserService", Name = "UserService")]
     public interface IUserService
     {
+
+
         [OperationContract]
         [WebInvoke(Method = "POST", BodyStyle = WebMessageBodyStyle.Bare, RequestFormat = WebMessageFormat.Json, ResponseFormat = WebMessageFormat.Json, UriTemplate = "/getMessage")]
         Stream getMessage(Stream postData);
-        
+
+        #region USUARIO
+
         [OperationContract]
         [WebInvoke(Method = "POST", BodyStyle = WebMessageBodyStyle.Bare, RequestFormat = WebMessageFormat.Json, ResponseFormat = WebMessageFormat.Json, UriTemplate = "/RegisterUser")]
         Stream RegisterUser(Stream postData);
-        
+
         [OperationContract]
         [WebInvoke(Method = "POST", BodyStyle = WebMessageBodyStyle.Bare, RequestFormat = WebMessageFormat.Json, ResponseFormat = WebMessageFormat.Json, UriTemplate = "/UpdtFriends")]
         Stream UpdtFriends(Stream postData);
-        
+
         [OperationContract]
         [WebInvoke(Method = "POST", BodyStyle = WebMessageBodyStyle.Bare, RequestFormat = WebMessageFormat.Json, ResponseFormat = WebMessageFormat.Json, UriTemplate = "/BlockFriend")]
         Stream BlockFriend(Stream postData);
@@ -33,18 +37,44 @@ namespace ElmatSvc
         [OperationContract]
         [WebInvoke(Method = "POST", BodyStyle = WebMessageBodyStyle.Bare, RequestFormat = WebMessageFormat.Json, ResponseFormat = WebMessageFormat.Json, UriTemplate = "/GetFriends")]
         Stream GetFriends(Stream postData);
+        #endregion
+
+        #region ROTINA
+
+        [OperationContract]
+        [WebInvoke(Method = "POST", BodyStyle = WebMessageBodyStyle.Bare, RequestFormat = WebMessageFormat.Json, ResponseFormat = WebMessageFormat.Json, UriTemplate = "/AddRoutine")]
+        Stream AddRoutine(Stream postData);
+
+        [OperationContract]
+        [WebInvoke(Method = "POST", BodyStyle = WebMessageBodyStyle.Bare, RequestFormat = WebMessageFormat.Json, ResponseFormat = WebMessageFormat.Json, UriTemplate = "/DelRoutine")]
+        Stream DelRoutine(Stream postData);
+
+        [OperationContract]
+        [WebInvoke(Method = "POST", BodyStyle = WebMessageBodyStyle.Bare, RequestFormat = WebMessageFormat.Json, ResponseFormat = WebMessageFormat.Json, UriTemplate = "/GetRoutines")]
+        Stream GetRoutines(Stream postData);
+        #endregion
+        
+        #region CARONA
         
         [OperationContract]
         [WebInvoke(Method = "POST", BodyStyle = WebMessageBodyStyle.Bare, RequestFormat = WebMessageFormat.Json, ResponseFormat = WebMessageFormat.Json, UriTemplate = "/CadastraCarona")]
         Stream CadastraCarona(Stream postData);
-        
+
         [OperationContract]
         [WebInvoke(Method = "POST", BodyStyle = WebMessageBodyStyle.Bare, RequestFormat = WebMessageFormat.Json, ResponseFormat = WebMessageFormat.Json, UriTemplate = "/ListaSolCaronas")]
         Stream ListaSolCaronas(Stream postData);
-        
+
         [OperationContract]
         [WebInvoke(Method = "POST", BodyStyle = WebMessageBodyStyle.Bare, RequestFormat = WebMessageFormat.Json, ResponseFormat = WebMessageFormat.Json, UriTemplate = "/AtendeSolicitacaoCarona")]
         Stream AtendeSolicitacaoCarona(Stream postData);
+        #endregion
+
+
+
+
+
+
+
 
     }
 }
