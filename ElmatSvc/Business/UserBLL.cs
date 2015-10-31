@@ -137,7 +137,8 @@ namespace ElmatSvc.Business
                                       select new User {
                                           FacebookID = F.UserID_A == usr.UserID ? UB.FacebookID : UA.FacebookID,
                                           UserID = F.UserID_A == usr.UserID ? UB.UserID : UA.UserID,
-                                          Name = F.UserID_A == usr.UserID ? UB.Name : UA.Name
+                                          Name = F.UserID_A == usr.UserID ? UB.Name : UA.Name,
+                                          RelationStatus = (int)F.StatusID
                                       }).ToList();
                 return AlreadyFriends;
             }

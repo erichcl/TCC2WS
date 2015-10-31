@@ -62,6 +62,11 @@ namespace ElmatSvc.Business
             {
                 var qryRide = (from R in entities.RIDE.Include("USER1") select R);
 
+                // Elimina os amigos bloqueados
+                var ublockedFriends = UserBLL.getUserFriends(usr).Where(x => x.RelationStatus == 1).Select(x => x.UserID).ToList();
+                qryRide = qryRide.Where(x => ublockedFriends.Contains(x.UserID));
+
+
                 if (fr.RideID.HasValue)
                 {
                     qryRide = qryRide.Where(x => x.RideID == fr.RideID.Value);
@@ -81,11 +86,9 @@ namespace ElmatSvc.Business
                 if (fr.UserID.HasValue)
                 {
                     usr.UserID = fr.UserID.Value;
-                    var usrFriends = UserBLL.getUserFriends(usr);
+                    var usrFriends = UserBLL.getUserFriends(usr).Select(x => x.UserID).ToList();;
                     // testar isso, não sei se vai funcionar
-                    qryRide = (from q in qryRide 
-                                join uf in usrFriends on q.UserID equals uf.UserID
-                                select q);
+                    qryRide = qryRide.Where(x => usrFriends.Contains(x.UserID));
                 }
 
                 if (fr.HoraIni.HasValue)

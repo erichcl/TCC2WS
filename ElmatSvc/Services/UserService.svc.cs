@@ -142,7 +142,7 @@ namespace ElmatSvc
                 Dictionary<string, string> sData = jss.Deserialize<Dictionary<string, string>>(json);
                 User usr =  jss.Deserialize<User>(sData["User"]);
                 User friend = jss.Deserialize<User>(sData["Friend"]);
-                bool isBlocked = jss.Deserialize<bool>(sData["isBlocked"]);
+                bool isBlocked = bool.Parse(sData["isBlocked"]);
                 UserBLL.BlockFriend(usr, friend, isBlocked);
 
                 dicReturn.Add("SUCCESS", true);

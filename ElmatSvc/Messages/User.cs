@@ -10,6 +10,7 @@ namespace ElmatSvc.Messages
         public Int64 FacebookID { get; set; }
         public int UserID { get; set; }
         public string Name { get; set; }
+        public int RelationStatus { get; set; }
     }
 
 
