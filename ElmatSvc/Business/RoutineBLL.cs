@@ -43,6 +43,7 @@ namespace ElmatSvc.Business
                                    where r.UserID == usr.UserID
                                    select new Routine { 
                                        RoutineID = r.RoutineID,
+                                       Title = r.Title,
                                        UserID = r.UserID,
                                        Mon = r.Mon,
                                        Tue = r.Tue,

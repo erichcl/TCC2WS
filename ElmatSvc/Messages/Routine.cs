@@ -9,6 +9,7 @@ namespace ElmatSvc.Messages
     {
         public int UserID { get; set; }
         public int RoutineID { get; set; }
+        public string Title { get; set; }
         public bool Mon { get; set; }
         public bool Tue { get; set; }
         public bool Wed { get; set; }
