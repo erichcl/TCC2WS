@@ -41,7 +41,7 @@
             <PropertyRef Name="Title" />
             <PropertyRef Name="UserID" />
           </Key>
-          <Property Name="RoutineID" Type="int" Nullable="false" />
+          <Property Name="RoutineID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Title" Type="varchar" MaxLength="250" Nullable="false" />
           <Property Name="UserID" Type="int" Nullable="false" />
           <Property Name="Mon" Type="bit" Nullable="false" />
@@ -316,7 +316,7 @@
             <PropertyRef Name="Title" />
             <PropertyRef Name="UserID" />
           </Key>
-          <Property Name="RoutineID" Type="Int32" Nullable="false" />
+          <Property Name="RoutineID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Title" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="false" />
           <Property Name="UserID" Type="Int32" Nullable="false" />
           <Property Name="Mon" Type="Boolean" Nullable="false" />

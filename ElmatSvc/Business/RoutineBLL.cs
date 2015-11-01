@@ -14,6 +14,7 @@ namespace ElmatSvc.Business
             {
                 ROUTINE R = new ROUTINE();
                 R.UserID = usr.UserID;
+                R.Title = rtn.Title;
                 R.Mon = rtn.Mon;
                 R.Tue = rtn.Tue;
                 R.Wed = rtn.Wed;
