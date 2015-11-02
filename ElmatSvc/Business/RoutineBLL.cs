@@ -61,6 +61,29 @@ namespace ElmatSvc.Business
             }
         }
 
+        public static void UpdateRoutine(Routine rtn, User usr)
+        {
+            using (elmatEntities entities = new elmatEntities())
+            {
+                var qryRoutines = (from R in entities.ROUTINE
+                                   where R.UserID == usr.UserID && R.RoutineID == rtn.RoutineID
+                                   select R).FirstOrDefault();
+
+                qryRoutines.Title = rtn.Title;
+                qryRoutines.Mon = rtn.Mon;
+                qryRoutines.Tue = rtn.Tue;
+                qryRoutines.Wed = rtn.Wed;
+                qryRoutines.Thu = rtn.Thu;
+                qryRoutines.Fri = rtn.Fri;
+                qryRoutines.Sat = rtn.Sat;
+                qryRoutines.Sun = rtn.Sun;
+                qryRoutines.Hour = rtn.Hour;
+
+                entities.SaveChanges();
+            }
+        }
+
+
         public static void DeleteRoutine(User usr, Routine rtn)
         {
             using (elmatEntities entities = new elmatEntities())
@@ -69,6 +92,7 @@ namespace ElmatSvc.Business
                                        where R.UserID == usr.UserID && R.RoutineID == rtn.RoutineID
                                        select R).FirstOrDefault();
                 entities.ROUTINE.Remove(qryRoutines);
+                entities.SaveChanges();
             }
         }
     }

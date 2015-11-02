@@ -230,6 +230,36 @@ namespace ElmatSvc
             return Util.GetJsonStream(returnJson);
         }
 
+        public Stream UpdtRoutine(Stream postData)
+        {
+            Dictionary<string, object> dicReturn = new Dictionary<string, object>();
+            try
+            {
+                var jss = new JavaScriptSerializer();
+                string json = new StreamReader(postData).ReadToEnd();
+                Dictionary<string, string> sData = jss.Deserialize<Dictionary<string, string>>(json);
+                User usr = jss.Deserialize<User>(sData["User"]);
+                Routine Routine = jss.Deserialize<Routine>(sData["Routine"]);
+                RoutineBLL.UpdateRoutine(Routine, usr);
+
+                dicReturn.Add("SUCCESS", true);
+                dicReturn.Add("CODMENSAGEM", "");
+                dicReturn.Add("RETORNO", "");
+                dicReturn.Add("EXCEPTION", "");
+            }
+            catch (Exception e)
+            {
+                dicReturn.Add("SUCCESS", false);
+                dicReturn.Add("CODMENSAGEM", "");
+                dicReturn.Add("RETORNO", "");
+                dicReturn.Add("EXCEPTION", e.Message);
+            }
+
+            JavaScriptSerializer jss2 = new JavaScriptSerializer();
+            String returnJson = jss2.Serialize(dicReturn);
+            return Util.GetJsonStream(returnJson);
+        }
+
         public Stream DelRoutine(Stream postData)
         {
             Dictionary<string, object> dicReturn = new Dictionary<string, object>();

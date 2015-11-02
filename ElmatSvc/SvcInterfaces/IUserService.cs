@@ -46,6 +46,10 @@ namespace ElmatSvc
         Stream AddRoutine(Stream postData);
 
         [OperationContract]
+        [WebInvoke(Method = "POST", BodyStyle = WebMessageBodyStyle.Bare, RequestFormat = WebMessageFormat.Json, ResponseFormat = WebMessageFormat.Json, UriTemplate = "/UpdtRoutine")]
+        Stream UpdtRoutine(Stream postData);
+
+        [OperationContract]
         [WebInvoke(Method = "POST", BodyStyle = WebMessageBodyStyle.Bare, RequestFormat = WebMessageFormat.Json, ResponseFormat = WebMessageFormat.Json, UriTemplate = "/DelRoutine")]
         Stream DelRoutine(Stream postData);
 
