@@ -100,7 +100,12 @@ namespace ElmatSvc.Business
                     qryRide = qryRide.Where(x => x.Hour <= fr.HoraFim.Value);
                 }
 
-                var qryRes = (from q in qryRide.Where(x => x.DriverID == null && x.UserID != usr.UserID)
+                var minHour = DateTime.Now.AddHours(-2);
+
+                var subqry = (from q in qryRide group q by q.UserID into g select new { UserID = g.Key, RideID = g.Max(a => a.RideID) });
+
+                var qryRes = (from q in qryRide.Where(x => x.DriverID == null && x.UserID != usr.UserID && x.Hour >= minHour)
+                              join g in subqry on new { q.UserID, q.RideID } equals new { g.UserID, g.RideID }
                               select new Ride
                               {
                                   usr = new User {

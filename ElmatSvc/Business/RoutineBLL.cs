@@ -1,6 +1,9 @@
 ﻿using ElmatSvc.Messages;
+using ElmatSvc.Utils;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity;
+using System.Data.Entity.Core.Objects;
 using System.Linq;
 using System.Web;
 
@@ -93,6 +96,25 @@ namespace ElmatSvc.Business
                                        select R).FirstOrDefault();
                 entities.ROUTINE.Remove(qryRoutines);
                 entities.SaveChanges();
+            }
+        }
+
+        public static GeoPoint checkClosestRoutine(User usr)
+        {
+            using (elmatEntities entities = new elmatEntities())
+            {
+                var now = DateTime.Now;
+                var closestRoutine = DateTime.Now.AddHours(1);
+
+                var qryRoutines = (from R in entities.ROUTINE
+                                   where R.UserID == usr.UserID
+                                   && DbFunctions.CreateTime(R.Hour.Hour, R.Hour.Minute, R.Hour.Second) >= DbFunctions.CreateTime(now.Hour, now.Minute, now.Second)
+                                   && DbFunctions.CreateTime(R.Hour.Hour, R.Hour.Minute, R.Hour.Second) <= DbFunctions.CreateTime(closestRoutine.Hour, closestRoutine.Minute, closestRoutine.Second)
+                                   select new GeoPoint { 
+                                       Latitude = R.Lat,
+                                       Longitude = R.Lon
+                                   }).FirstOrDefault();
+                return qryRoutines;
             }
         }
     }

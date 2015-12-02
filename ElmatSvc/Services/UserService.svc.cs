@@ -51,7 +51,6 @@ namespace ElmatSvc
             return Util.GetJsonStream(returnJson);
         }
 
-
         #region USUARIO
         
         public Stream RegisterUser(Stream postData)
@@ -322,7 +321,6 @@ namespace ElmatSvc
 
         #endregion
 
-
         #region CARONAS
 
         public Stream CadastraCarona(Stream postData)
@@ -370,6 +368,10 @@ namespace ElmatSvc
                 User usr = jss.Deserialize<User>(sData["User"]);
                 GeoPoint org = jss.Deserialize<GeoPoint>(sData["Origem"]);
                 GeoPoint dest = jss.Deserialize<GeoPoint>(sData["Destino"]);
+                if (dest == null)
+                {
+                    dest = RoutineBLL.checkClosestRoutine(usr);
+                }
 
                 if (busca == null)
                     busca = new FiltroRide();
