@@ -198,7 +198,10 @@ namespace ElmatSvc.Business
             using (elmatEntities entities = new elmatEntities())
             {
                 RIDE r = (from R in entities.RIDE.Where(x => x.UserID == usr.UserID) select R).OrderByDescending(x => x.RideID).FirstOrDefault();
-                return RIDEToRide(r);   
+                if (r != null)
+                    return RIDEToRide(r);
+                else
+                    return null;
             }
         }
     }

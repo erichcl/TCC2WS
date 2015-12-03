@@ -452,8 +452,8 @@ namespace ElmatSvc
                 string json = new StreamReader(postData).ReadToEnd();
                 User usr = jss.Deserialize<User>(json);
                 Ride r = RideBLL.VerificaCarona(usr);
-                User Driver = new User();
-                if (r.DriverID != 0)
+                User Driver = null;
+                if (r != null && r.DriverID != 0)
                 {
                     UserFilter srch = new UserFilter();
                     srch.UserID = r.DriverID;
