@@ -10,6 +10,9 @@ namespace ElmatSvc.Messages
     {
         public int? RideID {get; set;}
         public User usr { get; set; }
+
+        public int DriverID { get; set; }
+
         public DateTime Hour { get; set; }
         public double LatOrigem { get; set; }
         public double LonOrigem { get; set; }
@@ -19,6 +22,11 @@ namespace ElmatSvc.Messages
         public decimal distanciaOrg { get; set; }
         public ClassifiCarona? classDes { get; set; }
         public decimal? distanciaDes { get; set; }
+
+        public Ride()
+        {
+            usr = new User();
+        }
     }
 
     public class FiltroRide

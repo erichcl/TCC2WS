@@ -26,9 +26,10 @@ namespace ElmatSvc.Business
         private static Ride RIDEToRide(RIDE R)
         {
             Ride r = new Ride();
-            r.usr.FacebookID = R.USER.FacebookID;
+
+            r.DriverID = R.DriverID != null ? R.DriverID.Value : 0;
             r.RideID = R.RideID;
-            r.usr.UserID = R.USER.UserID;
+            r.usr.UserID = R.UserID;
             r.Hour = R.Hour;
             r.LatOrigem = R.LatOrg;
             r.LatDestino = R.LatDest;
@@ -189,6 +190,15 @@ namespace ElmatSvc.Business
                 var ride = (from R in entities.RIDE.Where(x => x.RideID == rd.RideID) select R).FirstOrDefault();
                 ride.DriverID = usr.UserID;
                 entities.SaveChanges();
+            }
+        }
+
+        public static Ride VerificaCarona(User usr)
+        {
+            using (elmatEntities entities = new elmatEntities())
+            {
+                RIDE r = (from R in entities.RIDE.Where(x => x.UserID == usr.UserID) select R).OrderByDescending(x => x.RideID).FirstOrDefault();
+                return RIDEToRide(r);   
             }
         }
     }

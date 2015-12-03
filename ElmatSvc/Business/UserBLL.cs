@@ -32,6 +32,7 @@ namespace ElmatSvc.Business
                 User retUsr = (from q in qrySearch
                                select new User
                                {
+                                   Name = q.Name,
                                    FacebookID = q.FacebookID,
                                    UserID = q.UserID
                                }).FirstOrDefault();

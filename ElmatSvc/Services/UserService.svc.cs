@@ -445,6 +445,41 @@ namespace ElmatSvc
             return Util.GetJsonStream(returnJson);
         }
 
+        public Stream VerificaCarona(Stream postData) {
+            Dictionary<string, object> dicReturn = new Dictionary<string, object>();
+            try {
+                var jss = new JavaScriptSerializer();
+                string json = new StreamReader(postData).ReadToEnd();
+                User usr = jss.Deserialize<User>(json);
+                Ride r = RideBLL.VerificaCarona(usr);
+                User Driver = new User();
+                if (r.DriverID != 0)
+                {
+                    UserFilter srch = new UserFilter();
+                    srch.UserID = r.DriverID;
+                    Driver = UserBLL.getUser(srch);
+                }
+                var ret = new { Ride = r, User = Driver };
+
+                dicReturn.Add("SUCCESS", true);
+                dicReturn.Add("CODMENSAGEM", "");
+                dicReturn.Add("RETORNO", ret);
+                dicReturn.Add("EXCEPTION", "");
+            }
+            catch (Exception e)
+            {
+                dicReturn.Add("SUCCESS", false);
+                dicReturn.Add("CODMENSAGEM", "");
+                dicReturn.Add("RETORNO", "");
+                dicReturn.Add("EXCEPTION", e.Message);
+            }
+            JsonSerializerSettings serializerSettings = new JsonSerializerSettings();
+            serializerSettings.Converters.Add(new IsoDateTimeConverter());
+            JsonSerializer js = new JsonSerializer();
+            string returnJson = JsonConvert.SerializeObject(dicReturn, serializerSettings);
+            return Util.GetJsonStream(returnJson);
+        }
+
         #endregion
     }
 }

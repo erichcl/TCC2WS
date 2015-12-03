@@ -71,6 +71,10 @@ namespace ElmatSvc
         [OperationContract]
         [WebInvoke(Method = "POST", BodyStyle = WebMessageBodyStyle.Bare, RequestFormat = WebMessageFormat.Json, ResponseFormat = WebMessageFormat.Json, UriTemplate = "/AtendeSolicitacaoCarona")]
         Stream AtendeSolicitacaoCarona(Stream postData);
+
+        [OperationContract]
+        [WebInvoke(Method = "POST", BodyStyle = WebMessageBodyStyle.Bare, RequestFormat = WebMessageFormat.Json, ResponseFormat = WebMessageFormat.Json, UriTemplate = "/VerificaCarona")]
+        Stream VerificaCarona(Stream postData); 
         #endregion
 
 
